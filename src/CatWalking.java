@@ -8,12 +8,6 @@ public class CatWalking extends CatAnimated {
     public CatWalking(){
         super("src/typing_game/CatSpriteSheet2.png", 1280, 720, 1, 6, 100);
     }
-
-    @Override
-    public BufferedImage getBufferedImage() {
-        return frames[currentFrame];
-    }
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);

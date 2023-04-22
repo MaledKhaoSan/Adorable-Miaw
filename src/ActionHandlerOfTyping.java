@@ -32,16 +32,17 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
 
+
         CatAnimated cat = new CatType().CatCreated(new CatWalking());
         cat.setBounds(0, 0, 1280, 720);
         targetFrame.layer.add(cat, Integer.valueOf(11));
 
 
-//        targetFrame.layer.add( CatType.catCreate(new CatWalking()) {{
-//            setBounds(0, 0, 1280, 720);
-//        }},  Integer.valueOf(11));
 
-//        targetFrame.layer.add(new CatWalking(){{
+
+
+
+//        targetFrame.layer.add( new CatType.CatCreated(new CatAnimated()) {{
 //            setBounds(0, 0, 1280, 720);
 //        }},  Integer.valueOf(11));
 
@@ -134,7 +135,13 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
     @Override
     public void mouseMoved(MouseEvent e) {}
 
+//        targetFrame.layer.add( CatType.catCreate(new CatWalking()) {{
+//            setBounds(0, 0, 1280, 720);
+//        }},  Integer.valueOf(11));
 
+//        targetFrame.layer.add(new CatWalking(){{
+//            setBounds(0, 0, 1280, 720);
+//        }},  Integer.valueOf(11));
 //    public ActionHandlerOfTyping(int minigameTimmer) {
 //        this.minigameTimmer = minigameTimmer;
 //    }

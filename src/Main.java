@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-//        new MainMenu();
+        new MainMenu();
 //        new MainStage();
-        new MiniGameTyping();
+//        new MiniGameTyping();
 //        new MiniGameCleaning();
 //        new MiniGameCooking();
     }

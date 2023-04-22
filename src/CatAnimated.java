@@ -30,7 +30,6 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
                 frames[(i * cols) + j] = spriteSheet.getSubimage(j * frameWidth, i * frameHeight, frameWidth, frameHeight);
             }
         }
-
         // Define the animation sequence
         currentFrame = 0;
         frameCount = frames.length;
@@ -50,9 +49,12 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
         Thread thread = new Thread(this);
         thread.start();
     }
-
     @Override
     public void paint(Graphics g) {}
+    @Override
+    public BufferedImage getBufferedImage() {
+        return frames[currentFrame];
+    }
     @Override
     public void run() {
         while (running) {
