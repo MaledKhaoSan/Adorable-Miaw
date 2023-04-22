@@ -32,23 +32,10 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
 
-
-        CatAnimated cat = new CatType().CatCreated(new CatWalking());
+        //Upcasting ประกาศแม่สร้างลูก
+        CatAnimated cat = new CatCreated().CatSelected(new CatWalking());
         cat.setBounds(0, 0, 1280, 720);
         targetFrame.layer.add(cat, Integer.valueOf(11));
-
-//        CatAnimated cat = new CatType().CatCreated(new CatWalking());
-//        cat.setBounds(0, 0, 1280, 720);
-//        targetFrame.layer.add(cat, Integer.valueOf(11));
-
-
-
-
-
-
-//        targetFrame.layer.add( new CatType.CatCreated(new CatAnimated()) {{
-//            setBounds(0, 0, 1280, 720);
-//        }},  Integer.valueOf(11));
 
         new Thread(new RunnableOfTyping(60, targetFrame, this), "Thread1").start();
 
