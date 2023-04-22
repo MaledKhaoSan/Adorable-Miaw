@@ -6,7 +6,7 @@ public class CatWalking extends CatAnimated {
     private boolean flipSprite = true;
 
     public CatWalking(){
-        super("src/typing_game/CatSpriteSheet2.png", 1280, 720, 1, 6, 100);
+        this.CreateBufferedFrame("src/typing_game/CatSpriteSheet2.png", 1280, 720, 1, 6, 100);
     }
     @Override
     public void paint(Graphics g) {

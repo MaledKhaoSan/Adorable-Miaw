@@ -15,7 +15,9 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
     protected int x, y;
     protected boolean running;
     protected int width, height;
-    public CatAnimated(String spriteSheetPath, int frameWidth, int frameHeight, int rows, int cols, int frameDelay) {
+
+//    public abstract void CatSelected();
+    public void CreateBufferedFrame(String spriteSheetPath, int frameWidth, int frameHeight, int rows, int cols, int frameDelay) {
         // Load the sprite sheet image
         try {
             spriteSheet = ImageIO.read(new File(spriteSheetPath));

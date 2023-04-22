@@ -37,6 +37,10 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
         cat.setBounds(0, 0, 1280, 720);
         targetFrame.layer.add(cat, Integer.valueOf(11));
 
+//        CatAnimated cat = new CatType().CatCreated(new CatWalking());
+//        cat.setBounds(0, 0, 1280, 720);
+//        targetFrame.layer.add(cat, Integer.valueOf(11));
+
 
 
 
