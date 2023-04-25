@@ -9,8 +9,14 @@ import java.io.IOException;
 
 public class SceneModify extends JLayeredPane{
     private int currentFrame = 0;
-    public JLayeredPane addJLayerPaneBackGround(String imagePath, String layerName){
-        JLayeredPane jLayeredPane = new JLayeredPane() {
+    private BufferedImage spriteSheet = null;
+    private int frameCount;
+    private int frameWidth;
+    private int frameHeight;
+
+//    private String fadeInPath = "src/canvas_modify/FadeIn.png";
+    public JLayeredPane addJLayerPaneBackGround(String imagePath, String layerName, boolean visible){
+        return new JLayeredPane() {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -22,45 +28,33 @@ public class SceneModify extends JLayeredPane{
             {
                 setName(layerName);
                 setBounds(0,0, 1280,720);
-                setVisible(false);
+                setVisible(visible);
             }};
-        return jLayeredPane;
     }
 
-    public JLabel createAnimatedLabel() {
-        String spriteSheetPath = "src/canvas_modify/FadeIn.png";
-        int frameWidth = 1280; int frameHeight = 720; int rows = 1; int cols = 7; int frameDelay = 1000;
-        // Load the sprite sheet image
-        BufferedImage spriteSheet = null;
+    public JLabel addJLayerPaneFadeInAnimate() {
         try {
-            spriteSheet = ImageIO.read(new File(spriteSheetPath));
+            spriteSheet = ImageIO.read(new File("src/canvas_modify/FadeIn.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        this.frameCount = 10;
+        this.frameWidth = spriteSheet.getWidth() / frameCount;
+        this.frameHeight = spriteSheet.getHeight();
 
-        // Slice the sprite sheet into individual frames
-        BufferedImage[] frames = new BufferedImage[rows * cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                frames[(i * cols) + j] = spriteSheet.getSubimage(j * frameWidth, i * frameHeight, frameWidth, frameHeight);
-            }
+        BufferedImage[] frames = new BufferedImage[frameCount];
+
+        for (int i = 0; i < frameCount; i++) {
+            int x = i * frameWidth;
+            int y = 0;
+            frames[i] = spriteSheet.getSubimage(x, y, frameWidth, frameHeight);
         }
 
-        // Define the animation sequence
-        int frameCount = frames.length;
-
-        // Set the initial position of the entity
-        int x = 0;
-        int y = 0;
-        int width = frameWidth * 1; // Width of entity in pixels
-        int height = frameHeight * 1; // Height of entity in pixels
-
-        // Create a new JLabel to hold the animated image
         JLabel label = new JLabel() {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(frames[currentFrame], x, y, 1280, 720, null);
+                g.drawImage(frames[currentFrame], 0, 0, 1280, 720, null);
             }
             {
                 setBounds(0,0,1280,720);
@@ -68,16 +62,61 @@ public class SceneModify extends JLayeredPane{
             }
         };
 
-        // Create a new thread to update the animation
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (currentFrame < frames.length- 1) {
-                    // Update the current frame of the animation // Repaint the label to show the updated animation and position
-                    currentFrame = (currentFrame + 1);
-                    label.repaint();
+                for (int i = 0; i < frames.length; i++) {
+                    currentFrame = i; label.repaint();
 
-                    // Wait for the specified delay between frames
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        thread.start();
+        return label;
+    }
+
+    public JLabel addJLayerPaneFadeOutAnimate() {
+        try {
+            spriteSheet = ImageIO.read(new File("src/canvas_modify/FadeOut.png"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        this.frameCount = 10;
+        this.frameWidth = spriteSheet.getWidth() / frameCount;
+        this.frameHeight = spriteSheet.getHeight();
+
+        BufferedImage[] frames = new BufferedImage[frameCount];
+
+        for (int i = 0; i < frameCount; i++) {
+            int x = i * frameWidth;
+            int y = 0;
+            frames[i] = spriteSheet.getSubimage(x, y, frameWidth, frameHeight);
+        }
+
+        JLabel label = new JLabel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(frames[currentFrame], 0, 0, 1280, 720, null);
+            }
+            {
+                setBounds(0,0,1280,720);
+                setVisible(true);
+            }
+        };
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < frames.length; i++) {
+                    currentFrame = i; label.repaint();
+
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {

@@ -7,23 +7,11 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
     private int mouseX, mouseY;
     private MiniGameTyping targetFrame;
     private String targetActionID;
-    private String targetRequestID;
     private JLabel targetLabel;
-    private int minigameTimmer;
     public ActionHandlerOfTyping(String targetActionID, MiniGameTyping targetFrame, JLabel targetLabel) {
         this.targetActionID = targetActionID;
         this.targetFrame = targetFrame;
         this.targetLabel = targetLabel;
-    }
-
-    public ActionHandlerOfTyping(String targetActionID, String targetRequestID, MiniGameTyping targetFrame, JLabel targetLabel) {
-        this.targetActionID = targetActionID;
-        this.targetRequestID = targetRequestID;
-        this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
-    }
-    public ActionHandlerOfTyping(String targetActionID) {
-        this.targetActionID = targetActionID;
     }
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
@@ -32,12 +20,7 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
 
-        //Upcasting ประกาศแม่สร้างลูก
-        CatAnimated cat = new CatCreated().CatSelected(new CatWalking());
-        cat.setBounds(0, 0, 1280, 720);
-        targetFrame.layer.add(cat, Integer.valueOf(11));
-
-        new Thread(new RunnableOfTyping(60, targetFrame, this), "Thread1").start();
+        new Thread(new RunnableOfTyping(60, targetFrame, this), "TypingStart").start();
 
     }
     public void endGameTimer() {
@@ -47,9 +30,7 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
 
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
     @Override
     public void keyPressed(KeyEvent e) {
         if (targetFrame.isCurrentWordRunning()) {
@@ -67,14 +48,17 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
                 System.out.println("Wrong");
             }
         }
+
+        //Tutorials <3
         else {
+            //เปลี่ยนไปใช้วิธี forLoop ArrayList
             if (targetFrame.typingTutorials1.isVisible()) {
                 targetFrame.typingTutorials1.setVisible(false);}
             else if (targetFrame.typingTutorials2.isVisible()) {
                 targetFrame.typingTutorials2.setVisible(false);}
             else if (targetFrame.typingTutorials3.isVisible()) {
                 targetFrame.typingTutorials3.setVisible(false);
-                new Thread(new RunnableOfTyping(0, targetFrame, this), "TypingCountDown").start();
+                new Thread(new RunnableOfTyping(3, targetFrame, this), "TypingCountDown").start();
             }
             else {
                 System.out.println("ENDING");

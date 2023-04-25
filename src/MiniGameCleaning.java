@@ -24,8 +24,8 @@ public class MiniGameCleaning extends JFrame {
             }
 
         };
-        layer.add(Challenge1 = new SceneModify().addJLayerPaneBackGround("src/cleaning_game/background1.png", "Challenge1"));
-        layer.add(Challenge2 = new SceneModify().addJLayerPaneBackGround("src/cleaning_game/background2.png", "Challenge2"));
+        layer.add(Challenge1 = new SceneModify().addJLayerPaneBackGround("src/cleaning_game/background1.png", "Challenge1", false));
+        layer.add(Challenge2 = new SceneModify().addJLayerPaneBackGround("src/cleaning_game/background2.png", "Challenge2", false));
 //        layer.add(FadeIn = new SceneModify().addJLayerPaneBackGround());
 
 //        layer.add(Challenge1 = new addJLayerPaneBackGround("src/cleaning_game/background1.png", "Challenge1"));

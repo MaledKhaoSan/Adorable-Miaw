@@ -6,8 +6,10 @@ public class CatWalking extends CatAnimated {
     private boolean flipSprite = true;
 
     public CatWalking(){
-        this.CreateBufferedFrame("src/typing_game/CatSpriteSheet2.png", 1280, 720, 1, 6, 100);
+        this.CreateBufferedFrame("src/typing_game/CatSpriteSheet1.png", 1280, 720, 1, 6, -800, -30, 100);
+        this.CreateBufferedAnimated();
     }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -29,4 +31,9 @@ public class CatWalking extends CatAnimated {
     }
     @Override
     public void jump() {}
+
+    @Override
+    public void update() {
+        currentFrame = (currentFrame + 1) % frameCount;
+    }
 }

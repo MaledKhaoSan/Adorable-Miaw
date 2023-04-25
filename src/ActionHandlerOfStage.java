@@ -8,18 +8,16 @@ import java.awt.event.MouseMotionListener;
 
 public class ActionHandlerOfStage implements MouseListener, MouseMotionListener {
     private MainStage targetFrame;
-    private String targetActionID;
-    private String targetRequestID;
     private JLabel targetLabel;
+    private JButton targetButton;
 
     public ActionHandlerOfStage(MainStage targetFrame, JLabel targetLabel) {
         this.targetFrame = targetFrame;
         this.targetLabel = targetLabel;
     }
-    public ActionHandlerOfStage(String targetActionID, MainStage targetFrame, JLabel targetLabel) {
-        this.targetActionID = targetActionID;
+    public ActionHandlerOfStage(MainStage targetFrame, JButton targetButton) {
         this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
+        this.targetButton = targetButton;
     }
 
 //    public ActionHandlerOfStage(String targetActionID, String targetRequestID, MainStage targetFrame, JLabel targetLabel) {
@@ -28,9 +26,6 @@ public class ActionHandlerOfStage implements MouseListener, MouseMotionListener 
 //        this.targetFrame = targetFrame;
 //        this.targetLabel = targetLabel;
 //    }
-    public ActionHandlerOfStage(String targetActionID) {
-        this.targetActionID = targetActionID;
-    }
 
 
 
@@ -53,8 +48,13 @@ public class ActionHandlerOfStage implements MouseListener, MouseMotionListener 
             ImageIcon newIcon = new ImageIcon("src/stage_canvas/minigameTypingEnter.png");
             targetFrame.minigameTypingEnter.setIcon(newIcon);
         } else if (e.getSource() == targetFrame.minigameTypingUIButton2) {
-            targetFrame.setVisible(false);
-            new MiniGameTyping();
+            targetFrame.minigameTypingDifficultyUI.setVisible(true);
+
+        }else if (e.getSource() == targetFrame.minigameTypingDifficultyButton1){
+            targetFrame.minigameTypingDifficultyUI.setVisible(false);
+
+
+
 
         } else if (e.getSource() == targetFrame.minigameCleaningEnter & (!targetFrame.isMinigameIsSelect())) {
             targetFrame.setMinigameIsSelect(true);
@@ -65,8 +65,8 @@ public class ActionHandlerOfStage implements MouseListener, MouseMotionListener 
             ImageIcon newIcon = new ImageIcon("src/stage_canvas/minigameCleaningEnter.png");
             targetFrame.minigameCleaningEnter.setIcon(newIcon);
         } else if (e.getSource() == targetFrame.minigameCleaningUIButton2) {
-            targetFrame.setVisible(false);
             new MiniGameCleaning();
+            targetFrame.setVisible(false);
 
         } else if (e.getSource() == targetFrame.minigameCookingEnter & (!targetFrame.isMinigameIsSelect())) {
             targetFrame.setMinigameIsSelect(true);
@@ -77,8 +77,8 @@ public class ActionHandlerOfStage implements MouseListener, MouseMotionListener 
             ImageIcon newIcon = new ImageIcon("src/stage_canvas/minigameCookingEnter.png");
             targetFrame.minigameCookingEnter.setIcon(newIcon);
         } else if (e.getSource() == targetFrame.minigameCookingUIButton2) {
-            targetFrame.setVisible(false);
             new MiniGameCooking();
+            targetFrame.setVisible(false);
         }
 
 

@@ -60,7 +60,7 @@ public class ActionHandlerOfCleaning extends JFrame implements ActionListener, M
         }
         else if (e.getSource() == targetFrame.Button2) {
             System.out.println("Clicked on Label 2");
-            targetFrame.layer.add(new SceneModify().createAnimatedLabel());
+            targetFrame.layer.add(new SceneModify().addJLayerPaneFadeInAnimate());
 
 //            targetFrame.layer.add(new CatWalking("src/typing_game/CatSpriteSheet2.png"){{
 //                setBounds(0, 0, 1280, 720);

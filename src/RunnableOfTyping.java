@@ -9,10 +9,6 @@ public class RunnableOfTyping implements Runnable{
         this.targetFrame = targetFrame;
         this.targetActionHandler = targetActionHandler;
     }
-    public RunnableOfTyping(int countdown, MiniGameTyping targetFrame) {
-        this.countdown = countdown;
-        this.targetFrame = targetFrame;
-    }
 
 
     @Override
@@ -29,9 +25,21 @@ public class RunnableOfTyping implements Runnable{
             } catch (InterruptedException e) {}
         }
 
-        else if (Thread.currentThread().getName().equals("Thread1")) {
+        else if (Thread.currentThread().getName().equals("TypingStart")) {
             try {
                 while (countdown > 0) {
+                    if (countdown == 59){
+                        //Upcasting ประกาศแม่สร้างลูก
+                        CatAnimated cat = new CatCreated().CatSelected(new CatPlaying());
+                        cat.setBounds(0, 0, 1280, 720);
+                        targetFrame.layer.add(cat, Integer.valueOf(8));
+                    }
+                    if (countdown == 59){
+                        //Upcasting ประกาศแม่สร้างลูก
+                        CatAnimated cat = new CatCreated().CatSelected(new CatWalking());
+                        cat.setBounds(0, 0, 1280, 720);
+                        targetFrame.layer.add(cat, Integer.valueOf(9));
+                    }
                     System.out.println(countdown + " seconds remaining.");
                     countdown--;
                     Thread.sleep(1000); // wait for 1 second

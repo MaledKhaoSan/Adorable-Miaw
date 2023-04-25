@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+
 public abstract class CatAnimated extends JLayeredPane implements Runnable, CatBehavior {
 
     protected BufferedImage spriteSheet;
@@ -16,8 +17,11 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
     protected boolean running;
     protected int width, height;
 
-//    public abstract void CatSelected();
-    public void CreateBufferedFrame(String spriteSheetPath, int frameWidth, int frameHeight, int rows, int cols, int frameDelay) {
+    public void CreateBufferedAnimated(){
+    //Create a new thread to update the animation
+    running = true; new Thread(this, "").start();
+}
+    public void CreateBufferedFrame(String spriteSheetPath, int frameWidth, int frameHeight, int rows, int cols, int x, int y, int frameDelay) {
         // Load the sprite sheet image
         try {
             spriteSheet = ImageIO.read(new File(spriteSheetPath));
@@ -39,30 +43,18 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
 
 
         // Set the initial position of the entity
-        x = -800;
-        y = -30;
-        width = frameWidth * 1; // Width of entity in pixels
-        height = frameHeight * 1; // Height of entity in pixels
-
-        // Set the running flag to true
-        running = true;
-
-        // Create a new thread to update the animation
-        Thread thread = new Thread(this);
-        thread.start();
+        this.x = x;//-800;
+        this.y = y;//-30;
+        width = (frameWidth * 1); // Width of entity in pixels
+        height = (frameHeight * 1); // Height of entity in pixels
     }
     @Override
     public void paint(Graphics g) {}
     @Override
-    public BufferedImage getBufferedImage() {
-        return frames[currentFrame];
-    }
-    @Override
     public void run() {
         while (running) {
             // Update the current frame of the animation
-            currentFrame = (currentFrame + 1) % frameCount;
-
+            update();
             // Update the position of the entity
             move();
             jump();

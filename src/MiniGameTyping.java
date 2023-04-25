@@ -6,8 +6,7 @@ import java.util.Random;
 public class MiniGameTyping extends JFrame{
     public JLabel wordLabel;
 //    private String[] words = {"apple", "banana", "cherry", "durian", "elderberry", "fig", "grape"};
-    private String[] words = {"lorem ipsum is simply dummy text of the printing and typesetting industry lorem ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged it was popularised in the 1960s with the release of letraset sheets containing lorem ipsum passages and more recently with desktop publishing software like aldus pagemaker including versions of lorem ipsum"};
-//        public String[] words = {"in order"};
+    private String[] words = {"alice was a fast typist she could type at lightning speed without even looking at the keyboard her fingers danced across the keys tapping out words as fast as her mind could think them one day alice decided to enter a typing competition she knew she had what it took to win and she was determined to come out on top"};
 
 
 
@@ -30,25 +29,21 @@ public class MiniGameTyping extends JFrame{
     public JLabel typingTransition;
 
     public MiniGameTyping() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Typing Game");
         setSize(1280, 747);
         layer = new JLayeredPane() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    image1 = new ImageIcon("src/typing_game/background.png");
-                    g.drawImage(image1.getImage(), 0, 0, null);
+                    g.drawImage(new ImageIcon("src/typing_game/background.png").getImage(), 0, 0, null);
                     String fontPath = "src/fonts/Sabreen Regular Demo 400.ttf";
                     Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(Font.PLAIN, 30);
+//                    Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(Font.PLAIN, 30);
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     ge.registerFont(font);
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception e) { e.printStackTrace(); }
             }
         };
 
@@ -61,6 +56,9 @@ public class MiniGameTyping extends JFrame{
 
 
 
+        layer.add(new JLabel("60"){{
+            setBounds(572,80, 105, 105);
+        }});
 
         layer.add(typingTutorials1 = new JLabel() {{
             ImageIcon typingTutorials1_Icon = new ImageIcon("src/typing_game/minigameTypingTutorials1.png");
@@ -101,14 +99,6 @@ public class MiniGameTyping extends JFrame{
                 addMouseListener(new ActionHandlerOfTyping("ScoreBaordButton2",  MiniGameTyping.this, ScoreBaordButton2));
             }},  Integer.valueOf(2));
         }},  Integer.valueOf(10));
-
-
-//        layer.add(typingTransition = new JLabel() {{
-//            setVisible(true);
-//        }},  Integer.valueOf(15));
-        // Create an instance of EntityAnimation
-        // Add the cat animation to the panel
-
 
 
         add(layer);
