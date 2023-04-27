@@ -7,7 +7,7 @@ public class CatPlaying extends CatAnimated {
     private boolean flipSprite = true;
 
     public CatPlaying(){
-        this.CreateBufferedFrame("src/typing_game/CatSpriteSheet3.png", 1280, 720, 1, 6, 0,0, 100);
+        this.CreateBufferedFrame("src/resource/typing_game/CatSpriteSheet3.png", 1280, 720, 1, 6, 0,0, 100);
         this.CreateBufferedAnimated();
     }
     @Override
@@ -24,7 +24,7 @@ public class CatPlaying extends CatAnimated {
     @Override
     public void update() {
         if ((currentFrame + 1) % frameCount == 0 & frameCount == 6){
-            this.CreateBufferedFrame("src/typing_game/CatSpriteSheet4.png", 1280, 720, 1, 9, 0,0, 100);
+            this.CreateBufferedFrame("src/resource/typing_game/CatSpriteSheet4.png", 1280, 720, 1, 9, 0,0, 100);
         }
         else if ((currentFrame + 1) % frameCount == 0){
             for (int i = 0; i < frames.length / 2; i++) {

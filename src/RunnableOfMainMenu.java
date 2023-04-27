@@ -34,7 +34,7 @@ public class RunnableOfMainMenu implements Runnable{
                     countdown--;
                     Thread.sleep(1000);
                 }
-                targetActionHandler.nextScene();
+                targetActionHandler.stageScene();
 
             } catch (InterruptedException ignored) {}
         }

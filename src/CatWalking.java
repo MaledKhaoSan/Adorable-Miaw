@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 public class CatWalking extends CatAnimated {
     private boolean flipSprite = true;
 
-    public CatWalking(){
-        this.CreateBufferedFrame("src/typing_game/CatSpriteSheet1.png", 1280, 720, 1, 6, -800, -30, 100);
+    public CatWalking(String spriteSheetPath){
+        this.CreateBufferedFrame(spriteSheetPath, 1280, 720, 1, 6, -800, -15, 100);
         this.CreateBufferedAnimated();
     }
 

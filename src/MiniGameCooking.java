@@ -10,9 +10,9 @@ public class MiniGameCooking extends JFrame implements MouseMotionListener, Runn
     private JFrame canvas = new JFrame();
     public JPanel panel;
 
-    private ImageIcon image1 = new ImageIcon("src/menu_canvas/background.png");
-    private ImageIcon image2 = new ImageIcon("src/menu_canvas/difficulty.png");
-    private ImageIcon image3 = new ImageIcon("src/menu_canvas/difficulty.png");
+    private ImageIcon image1 = new ImageIcon("src/resource/menu_canvas/background.png");
+    private ImageIcon image2 = new ImageIcon("src/resource/menu_canvas/difficulty.png");
+    private ImageIcon image3 = new ImageIcon("src/resource/menu_canvas/difficulty.png");
     public JButton  menuButton2, difficultyButton1, difficultyButton2;
     public JLabel minigameCookingButton1;
     public JLabel minigameCookingBento1;
@@ -33,7 +33,7 @@ public class MiniGameCooking extends JFrame implements MouseMotionListener, Runn
                 super.paintComponent(g);
                 try {
                     //path ไปหาไฟล์รูปภาพ
-                    image1 = new ImageIcon("src/cooking_game/background.png");
+                    image1 = new ImageIcon("src/resource/cooking_game/background.png");
                     g.drawImage(image1.getImage(), 0, 0, null);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -45,7 +45,7 @@ public class MiniGameCooking extends JFrame implements MouseMotionListener, Runn
         // Slide the index to the next element and wrap around to the beginning if necessary
 
 
-        panel.add(minigameCookingBento1 = new JLabel(new ImageIcon("src/cooking_game/bento1.png")) {{
+        panel.add(minigameCookingBento1 = new JLabel(new ImageIcon("src/resource/cooking_game/bento1.png")) {{
             setBounds(71, 188, 585, 455);
 //            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this, minigameCookingBento1));
         }});
@@ -65,7 +65,7 @@ public class MiniGameCooking extends JFrame implements MouseMotionListener, Runn
         }});
 
 
-//        panel.add(minigameCookingButton1 = new JLabel(new ImageIcon("src/cooking_game/button1.png")) {{
+//        panel.add(minigameCookingButton1 = new JLabel(new ImageIcon("src/resource/cooking_game/button1.png")) {{
 //            setBounds((1280/2 - 240), (720/2 - 240), 85, 85);
 //            addMouseListener(new ActionHandlerOfCooking("minigameCookingButton1",  MiniGameCooking.this, minigameCookingButton1));
 //            setOpaque(true);

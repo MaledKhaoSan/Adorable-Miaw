@@ -1,3 +1,4 @@
+import canvas_modify.FadeInAnimate;
 import canvas_modify.SceneModify;
 
 import javax.swing.*;
@@ -55,14 +56,13 @@ public class ActionHandlerOfCleaning extends JFrame implements ActionListener, M
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == targetFrame.Button1) {
             System.out.println("Clicked on Label 1");
-            targetFrame.Challenge1.setVisible(true);
-            targetFrame.Challenge1.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge1));
+            new CleaningMissionCreate(targetFrame, targetFrame.Challenge1, "");
         }
         else if (e.getSource() == targetFrame.Button2) {
             System.out.println("Clicked on Label 2");
-            targetFrame.layer.add(new SceneModify().addJLayerPaneFadeInAnimate());
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()));
 
-//            targetFrame.layer.add(new CatWalking("src/typing_game/CatSpriteSheet2.png"){{
+//            targetFrame.layer.add(new CatWalking("src/resource/typing_game/CatSpriteSheet2.png"){{
 //                setBounds(0, 0, 1280, 720);
 //            }},  Integer.valueOf(11));
 

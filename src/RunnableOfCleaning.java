@@ -14,7 +14,6 @@ public class RunnableOfCleaning implements Runnable{
         this.targetFrame = targetFrame;
     }
 
-
     @Override
     public void run() {
         if (Thread.currentThread().getName().equals("TypingCountDown")) {

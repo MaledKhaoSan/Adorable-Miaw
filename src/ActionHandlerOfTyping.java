@@ -1,10 +1,15 @@
+import canvas_modify.FadeInAnimate;
+import canvas_modify.SceneModify;
+
 import javax.swing.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
-public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseMotionListener {
-    private int mouseX, mouseY;
+public class ActionHandlerOfTyping implements ActionListener, KeyListener {
+    private int wordsLength, correctWords, incorrectWords, times;
     private MiniGameTyping targetFrame;
     private String targetActionID;
     private JLabel targetLabel;
@@ -16,14 +21,30 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
     }
+
+    public ActionHandlerOfTyping(MiniGameTyping targetFrame, JLabel targetLabel) {
+        this.targetFrame = targetFrame;
+        this.targetLabel = targetLabel;
+    }
+
     public void startGameTimer() {
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
 
-        new Thread(new RunnableOfTyping(60, targetFrame, this), "TypingStart").start();
+        new Thread(new RunnableOfTyping(5, targetFrame, this), targetFrame.difficulty).start();
 
     }
-    public void endGameTimer() {
+    public void endGameTimer(int wordsLength) {
+        this.wordsLength = wordsLength;
+        if (correctWords >= wordsLength/100 * 50){
+            System.out.println("3 start, 15 point");
+        } else if (correctWords >= wordsLength/100 * 40) {
+            System.out.println("2 start, 10 point");
+        } else {
+            System.out.println("1 start, 5 point");
+        }
+        System.out.println(correctWords +" "+ incorrectWords);
+
         targetFrame.ScoreBaordBG.setVisible(true);
     }
 
@@ -41,11 +62,12 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
                     targetFrame.setCurrentWordRunning(false);
                     System.out.println("LAST WORD");
                 }
+                correctWords++;
                 targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart()) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart()) + "<html>");
             }
             else {
                 targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart()) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: red'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart(), targetFrame.getCurrentWordStart() + 1) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart() + 1) + "<html>");
-                System.out.println("Wrong");
+                incorrectWords++;
             }
         }
 
@@ -69,46 +91,22 @@ public class ActionHandlerOfTyping implements KeyListener, MouseListener, MouseM
     public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        if (targetActionID.equals("ScoreBaordButton1")) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == targetFrame.ScoreBaordButton1) {
             System.out.println("Clicked");
         }
-        else if (targetActionID.equals("ScoreBaordButton2")) {
-            System.out.println("Clicked");
-        }
-    }
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (targetActionID.equals("ScoreBaordButton1")) {
-            System.out.println("ChangeTo Clicked Button");
-        }
-        else if (targetActionID.equals("ScoreBaordButton2")) {
-            System.out.println("ChangeTo Clicked Button");
+        else if (e.getSource() == targetFrame.ScoreBaordButton2) {
+
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(30));
+            new Thread(new RunnableOfTyping(1, targetFrame, this), "waiter").start();
         }
     }
 
+    public void stageScene(){
+        new MainStage();
+        targetFrame.setVisible(false);
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        if (targetActionID.equals("ScoreBaordButton1")) {
-            System.out.println("ChangeTo Default Button");
-        }
-        else if (targetActionID.equals("ScoreBaordButton2")) {
-            System.out.println("ChangeTo Default Button");
-        }
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void mouseDragged(MouseEvent e) {}
-
-    @Override
-    public void mouseMoved(MouseEvent e) {}
 
 //        targetFrame.layer.add( CatType.catCreate(new CatWalking()) {{
 //            setBounds(0, 0, 1280, 720);
