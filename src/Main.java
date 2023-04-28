@@ -4,8 +4,8 @@ public class Main {
 //        new MainStage();
 //        new MiniGameTyping("normal");
 //        new MiniGameCleaning();
-//        new MiniGameCooking();
-        new MainBuilding();
+        new MiniGameCooking();
+//        new MainBuilding();
 
     }
 }

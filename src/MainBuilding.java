@@ -5,6 +5,7 @@ import java.awt.*;
 public class MainBuilding extends JFrame{
     public JLayeredPane layer;
     public JLabel uiButton1;
+    public JButton homeExit;
 
     public MainBuilding() {
         this.setBackground(Color.BLACK);
@@ -18,6 +19,11 @@ public class MainBuilding extends JFrame{
             //addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameTypingEnter));
             setBounds(1103, 28, 150, 55);
         }}, Integer.valueOf(9));
+
+        layer.add(homeExit = new JButton(new ImageIcon("src/resource/stage_canvas/homeEnter.png")) {{
+            addActionListener(new ActionHandlerOfBuilding(MainBuilding.this));
+            setBounds(108, 25, 55, 55);
+        }}, Integer.valueOf(0));
 
 
         this.setSize(1280, 747);

@@ -1,9 +1,6 @@
-import canvas_modify.FadeInAnimate;
 import canvas_modify.FadeOutAnimate;
 import canvas_modify.SceneModify;
-
 import javax.swing.*;
-import javax.swing.text.StyleConstants;
 import java.awt.*;
 
 
@@ -15,15 +12,14 @@ public class MainStage extends JFrame{
     public JLabel minigameTypingEnter, minigameCleaningEnter, minigameCookingEnter;
     public JButton homeEnter;
     public JLabel minigameTypingUI;
-    public JButton minigameTypingUIButton1, minigameTypingUIButton2;
+    public JButton minigameTypingUIButton1, minigameTypingUIButton2, minigameTypingUIButton3, minigameTypingDifficulty1, minigameTypingDifficulty2, minigameTypingDifficulty3;
     public JLabel minigameCleaningUI;
-    public JButton minigameCleaningUIButton1, minigameCleaningUIButton2;
+    public JButton minigameCleaningUIButton1, minigameCleaningUIButton2, minigameCleaningUIButton3;
     public JLabel minigameCookingUI;
-    public JButton minigameCookingUIButton1, minigameCookingUIButton2;
+    public JButton minigameCookingUIButton1, minigameCookingUIButton2, minigameCookingUIButton3, minigameCookingDifficulty1, minigameCookingDifficulty2, minigameCookingDifficulty3;
 
 
     public JLabel minigameTypingDifficultyUI;
-    public JButton minigameTypingDifficultyButton1, minigameTypingDifficulty1, minigameTypingDifficulty2, minigameTypingDifficulty3;
     public MainStage() {
         this.setBackground(Color.BLACK);
         layer = new SceneModify().addJLayerPaneBackGround("src/resource/stage_canvas/background.png", "layer", true);
@@ -63,33 +59,25 @@ public class MainStage extends JFrame{
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUIButton2));
             }},  Integer.valueOf(2));
-        }},  Integer.valueOf(5));
-
-        layer.add(minigameTypingDifficultyUI = new JLabel(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficultyUI.png")) {{
-            addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficultyUI));
-            setBounds((1280/2) - (580/2), 145, 580, 332);
-            setVisible(false);
             add(minigameTypingDifficulty1 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
                 setBounds(49, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty1));
+                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty1)); setVisible(false);
             }},  Integer.valueOf(2));
             add(minigameTypingDifficulty2 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
                 setBounds(222, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty2));
+                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty2)); setVisible(false);
             }},  Integer.valueOf(2));
             add(minigameTypingDifficulty3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
                 setBounds(395, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty3));
+                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty3)); setVisible(false);
             }},  Integer.valueOf(2));
-//
-            add(minigameTypingDifficultyButton1 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameTypingUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
                 setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficultyButton1));
+                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUIButton3)); setVisible(false);
             }},  Integer.valueOf(2));
+        }},  Integer.valueOf(5));
 
-        }},  Integer.valueOf(6));
-
-        layer.add(minigameCleaningUI = new JLabel(new ImageIcon("src/resource/stage_canvas/minigameUI.png")) {{
+        layer.add(minigameCleaningUI = new JLabel(new ImageIcon("src/resource/stage_canvas/minigameCleaningTutorial.png")) {{
             addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameCleaningUI));
             setBounds((1280/2) - (580/2), 145, 580, 332);
             setVisible(false);
@@ -97,12 +85,17 @@ public class MainStage extends JFrame{
             add(minigameCleaningUIButton1 = new JButton() {{
                 setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
                 setBounds(580/2 - 145/2 - 130, 332 - 50, 145, 45);
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameCleaningUIButton1));
+                addActionListener(new ActionHandlerOfStage(MainStage.this));
             }},  Integer.valueOf(2));
             add(minigameCleaningUIButton2 = new JButton() {{
                 setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
-                addActionListener(new ActionHandlerOfStage(MainStage.this, minigameCleaningUIButton2));
+                addActionListener(new ActionHandlerOfStage(MainStage.this));
+            }},  Integer.valueOf(2));
+
+            add(minigameCleaningUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+                setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
+                addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
             }},  Integer.valueOf(2));
         }},  Integer.valueOf(5));
 
@@ -121,6 +114,24 @@ public class MainStage extends JFrame{
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameCookingUIButton2));
             }},  Integer.valueOf(2));
+            add(minigameCookingUIButton3 = new JButton( new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+                setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
+                addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
+            }},  Integer.valueOf(2));
+
+            add(minigameCookingDifficulty1 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
+                setBounds(49, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
+                addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
+            }},  Integer.valueOf(2));
+            add(minigameCookingDifficulty2 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
+                setBounds(222, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
+                addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
+            }},  Integer.valueOf(2));
+            add(minigameCookingDifficulty3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty1.png")) {{
+                setBounds(395, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
+                addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
+            }},  Integer.valueOf(2));
+
         }},  Integer.valueOf(5));
 
 

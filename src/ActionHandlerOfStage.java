@@ -93,42 +93,96 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == targetFrame.minigameTypingDifficultyButton1){
-            targetFrame.minigameTypingDifficultyUI.setVisible(false);
-
-        }else if (e.getSource() == targetFrame.minigameTypingDifficulty1){
-            new Thread(new RunnableOfMainStage(1, targetFrame, "starter"), "MiniGameTypingTransition").start();
-
-        }else if (e.getSource() == targetFrame.minigameTypingDifficulty2){
-            new Thread(new RunnableOfMainStage(1, targetFrame, "normal"), "MiniGameTypingTransition").start();
-
-        }else if (e.getSource() == targetFrame.minigameTypingDifficulty3){
-            new Thread(new RunnableOfMainStage(1, targetFrame, "hard"), "MiniGameTypingTransition").start();
-
-        } else if (e.getSource() == targetFrame.minigameTypingUIButton1) {
+        if (e.getSource() == targetFrame.minigameTypingUIButton1) {
             targetFrame.setMinigameIsSelect(false);
             targetFrame.minigameTypingUI.setVisible(false);
-            ImageIcon newIcon = new ImageIcon("src/resource/stage_canvas/minigameTypingEnter.png");
-            targetFrame.minigameTypingEnter.setIcon(newIcon);
+            targetFrame.minigameTypingEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingEnter.png"));
         } else if (e.getSource() == targetFrame.minigameTypingUIButton2) {
-            targetFrame.minigameTypingDifficultyUI.setVisible(true);
+            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficultyUI.png"));
+            targetFrame.minigameTypingUIButton1.setVisible(false);
+            targetFrame.minigameTypingUIButton2.setVisible(false);
+            targetFrame.minigameTypingUIButton3.setVisible(true);
+            targetFrame.minigameTypingDifficulty1.setVisible(true);
+            targetFrame.minigameTypingDifficulty2.setVisible(true);
+            targetFrame.minigameTypingDifficulty3.setVisible(true);
+
+
+        } else if (e.getSource() == targetFrame.minigameTypingUIButton3){
+            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingTutorial.png"));
+            targetFrame.minigameTypingUIButton1.setVisible(true);
+            targetFrame.minigameTypingUIButton2.setVisible(true);
+            targetFrame.minigameTypingUIButton3.setVisible(false);
+            targetFrame.minigameTypingDifficulty1.setVisible(false);
+            targetFrame.minigameTypingDifficulty2.setVisible(false);
+            targetFrame.minigameTypingDifficulty3.setVisible(false);
+
+        }else if (e.getSource() == targetFrame.minigameTypingDifficulty1){
+            new Thread(new RunnableOfMainStage(1, targetFrame, "starter"), "MiniGameTypingEnter").start();
+
+        }else if (e.getSource() == targetFrame.minigameTypingDifficulty2){
+            new Thread(new RunnableOfMainStage(1, targetFrame, "normal"), "MiniGameTypingEnter").start();
+
+        }else if (e.getSource() == targetFrame.minigameTypingDifficulty3){
+            new Thread(new RunnableOfMainStage(1, targetFrame, "hard"), "MiniGameTypingEnter").start();
+
+
+
+
+        //Cleaning Enter UX
         } else if (e.getSource() == targetFrame.minigameCleaningUIButton1) {
             targetFrame.setMinigameIsSelect(false);
             targetFrame.minigameCleaningUI.setVisible(false);
-            ImageIcon newIcon = new ImageIcon("src/resource/stage_canvas/minigameCleaningEnter.png");
-            targetFrame.minigameCleaningEnter.setIcon(newIcon);
+            targetFrame.minigameCleaningEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningEnter.png"));
+
         } else if (e.getSource() == targetFrame.minigameCleaningUIButton2) {
-            new MiniGameCleaning();
-            targetFrame.setVisible(false);
+            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningUI.png"));
+            targetFrame.minigameCleaningUIButton1.setVisible(false);
+            targetFrame.minigameCleaningUIButton2.setVisible(false);
+            targetFrame.minigameCleaningUIButton3.setVisible(true);
+
+        } else if (e.getSource() == targetFrame.minigameCleaningUIButton3) {
+            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningTutorial.png"));
+            targetFrame.minigameCleaningUIButton1.setVisible(true);
+            targetFrame.minigameCleaningUIButton2.setVisible(true);
+            targetFrame.minigameCleaningUIButton3.setVisible(false);
+//          new MiniGameCleaning();
+//          targetFrame.setVisible(false);
+
+
+        //Cooking Enter UX
         } else if (e.getSource() == targetFrame.minigameCookingUIButton1) {
             targetFrame.setMinigameIsSelect(false);
             targetFrame.minigameCookingUI.setVisible(false);
-            ImageIcon newIcon = new ImageIcon("src/resource/stage_canvas/minigameCookingEnter.png");
-            targetFrame.minigameCookingEnter.setIcon(newIcon);
+            targetFrame.minigameCookingEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingEnter.png"));
         } else if (e.getSource() == targetFrame.minigameCookingUIButton2) {
-            new MiniGameCooking();
-            targetFrame.setVisible(false);
+            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingDifficultyUI.png"));
+            targetFrame.minigameCookingUIButton1.setVisible(false);
+            targetFrame.minigameCookingUIButton2.setVisible(false);
+            targetFrame.minigameCookingUIButton3.setVisible(true);
+            targetFrame.minigameCookingDifficulty1.setVisible(true);
+            targetFrame.minigameCookingDifficulty2.setVisible(true);
+            targetFrame.minigameCookingDifficulty3.setVisible(true);
+
+        } else if (e.getSource() == targetFrame.minigameCookingUIButton3){
+            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingTutorial.png"));
+            targetFrame.minigameCookingUIButton1.setVisible(true);
+            targetFrame.minigameCookingUIButton2.setVisible(true);
+            targetFrame.minigameCookingUIButton3.setVisible(false);
+            targetFrame.minigameCookingDifficulty1.setVisible(false);
+            targetFrame.minigameCookingDifficulty2.setVisible(false);
+            targetFrame.minigameCookingDifficulty3.setVisible(false);
+
+        }else if (e.getSource() == targetFrame.minigameCookingDifficulty1){
+            new Thread(new RunnableOfMainStage(1, targetFrame, "starter"), "MiniGameCookingEnter").start();
+
+        }else if (e.getSource() == targetFrame.minigameCookingDifficulty2){
+            new Thread(new RunnableOfMainStage(1, targetFrame, "normal"), "MiniGameCookingEnter").start();
+
+        }else if (e.getSource() == targetFrame.minigameCookingDifficulty3) {
+            new Thread(new RunnableOfMainStage(1, targetFrame, "hard"), "MiniGameCookingEnter").start();
         }
+
+
 
         else if (e.getSource() == targetFrame.homeEnter) {
             new Thread(new RunnableOfMainStage(1, targetFrame), "MainBuildingEnter").start();

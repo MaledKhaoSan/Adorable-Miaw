@@ -18,7 +18,7 @@ public class RunnableOfMainStage implements Runnable{
     }
     @Override
     public synchronized void run() {
-        if (Thread.currentThread().getName().equals("MiniGameTypingTransition")) {
+        if (Thread.currentThread().getName().equals("MiniGameTypingEnter")) {
             targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(10));
             try {
                 while (countdown > 0) {
@@ -26,6 +26,18 @@ public class RunnableOfMainStage implements Runnable{
                     Thread.sleep(1000);
                 }
                 new MiniGameTyping(difficulty);
+                targetFrame.setVisible(false);
+
+            } catch (InterruptedException ignored) {}
+        }
+        else if (Thread.currentThread().getName().equals("MiniGameCookingEnter")) {
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(10));
+            try {
+                while (countdown > 0) {
+                    countdown--;
+                    Thread.sleep(1000);
+                }
+                new MiniGameCooking();
                 targetFrame.setVisible(false);
 
             } catch (InterruptedException ignored) {}
