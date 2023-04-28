@@ -1,12 +1,7 @@
-
-
 import canvas_modify.SceneModify;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.lang.reflect.Array;
 
 public class MiniGameCooking extends JFrame {
     public JLayeredPane layer;
@@ -17,9 +12,13 @@ public class MiniGameCooking extends JFrame {
     public JLabel selectedFrameBG;
     public JButton selectedFrameButton, selectedFrameSlideLeft, selectedFrameSlideRight;
 
+    public JLabel BentoHitBox1, BentoHitBox2, BentoHitBox3, BentoHitBox4;
+
     public JLabel selectedFrameFood;
     public JLabel JLabelButton1, JLabelButton2;
-    public int[] array = {1, 2, 3};
+    public int[] NewArray = {0, 0, 0};
+    public int[] arrayA = {1, 2, 3};
+    public int[] arrayB = {4, 5, 6};
     public int currentIndex = -1;
     public Thread thread;
 
@@ -31,6 +30,34 @@ public class MiniGameCooking extends JFrame {
             setBounds(71, 188, 585, 455);
 //            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this, minigameCookingBento1));
         }});
+
+
+        layer.add(BentoHitBox1 = new JLabel() {{
+            setBounds(123, 200, 224, 350);
+            setBackground(new Color(0, 0, 0, 128));
+            setOpaque(true);
+            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this));
+        }},  Integer.valueOf(7));
+
+        layer.add(BentoHitBox2 = new JLabel() {{
+            setBounds(364, 200, 251, 175);
+            setBackground(new Color(0, 0, 0, 128));
+            setOpaque(true);
+            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this));
+        }},  Integer.valueOf(7));
+
+        layer.add(BentoHitBox3 = new JLabel() {{
+            setBounds(364, 390, 283, 160);
+            setBackground(new Color(0, 0, 0, 128));
+            setOpaque(true);
+            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this));
+        }},  Integer.valueOf(7));
+        layer.add(BentoHitBox4 = new JLabel() {{
+            setBounds(59, 177, 615, 485);
+            setBackground(new Color(0, 0, 0, 128));
+            setOpaque(true);
+            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this));
+        }},  Integer.valueOf(6));
 
 
         //Main Course
@@ -52,7 +79,7 @@ public class MiniGameCooking extends JFrame {
                 addActionListener(new ActionHandlerOfCooking(MiniGameCooking.this));
             }},  Integer.valueOf(2));
             add(selectedFrameFood = new JLabel(new ImageIcon("src/resource/cooking_game/icon1.png")) {{
-                setBounds(10, 115, 350, 250);
+                setBounds(8, 115, 350, 250);
             }},  Integer.valueOf(1));
         }},  Integer.valueOf(5));
 

@@ -31,7 +31,7 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
 
-        new Thread(new RunnableOfTyping(5, targetFrame, this), targetFrame.difficulty).start();
+        new Thread(new RunnableOfTyping(60, targetFrame, this), targetFrame.difficulty).start();
 
     }
     public void endGameTimer(int wordsLength) {
