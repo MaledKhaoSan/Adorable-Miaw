@@ -26,7 +26,7 @@ public class RunnableOfMainStage implements Runnable{
                     Thread.sleep(1000);
                 }
                 new MiniGameTyping(difficulty);
-                targetFrame.setVisible(false);
+                targetFrame.dispose();
 
             } catch (InterruptedException ignored) {}
         }
@@ -38,7 +38,7 @@ public class RunnableOfMainStage implements Runnable{
                     Thread.sleep(1000);
                 }
                 new MiniGameCooking();
-                targetFrame.setVisible(false);
+                targetFrame.dispose();
 
             } catch (InterruptedException ignored) {}
         }
@@ -51,7 +51,7 @@ public class RunnableOfMainStage implements Runnable{
                     Thread.sleep(1000);
                 }
                 new MainBuilding();
-                targetFrame.setVisible(false);
+                targetFrame.dispose();
 
             } catch (InterruptedException ignored) {}
         }

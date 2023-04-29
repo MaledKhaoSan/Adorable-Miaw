@@ -8,8 +8,7 @@ public class MiniGameCooking extends JFrame {
     public JLabel minigameCookingBento1;
     public JLabel selectedFrameBG;
     public JButton selectedFrameButton, selectedFrameSlideLeft, selectedFrameSlideRight;
-
-    public JLabel BentoHitBox1, BentoHitBox2, BentoHitBox3, BentoHitBox4;
+    public JButton BentoHitBox1, BentoHitBox2, BentoHitBox3, BentoHitBox4;
     public JLabel selectedFrameFood;
     public JLabel mainFood, sideFood, dessertFood, BentoBox;
     public JLabel JLabelButton1, JLabelButton2;
@@ -25,19 +24,17 @@ public class MiniGameCooking extends JFrame {
 //            addMouseListener(new ActionHandlerOfCooking(MiniGameCooking.this, minigameCookingBento1));
         }});
 
-        //Bento Food
-//        layer.add(mainFood = new SceneModify().newJLabel(x, y, w, h, handler, ""), Integer.valueOf(5));
-//        layer.add(sideFood = new SceneModify().newJLabel(123, 200, 224, 350, handler, ""), Integer.valueOf(5));
-//        layer.add(dessertFood = new SceneModify().newJLabel(123, 200, 224, 350, handler, ""), Integer.valueOf(5));
-//        layer.add(BentoBox = new SceneModify().newJLabel(123, 200, 224, 350, handler, ""), Integer.valueOf(5));
-
-
-
         //Bento HitBox
-        layer.add(BentoHitBox1 = new SceneModify().newJLabel(123, 200, 224, 350, 0,0,0,128,true, handler), Integer.valueOf(7));
-        layer.add(BentoHitBox2 = new SceneModify().newJLabel(364, 200, 251, 175, 0,0,0,128,true, handler), Integer.valueOf(7));
-        layer.add(BentoHitBox3 = new SceneModify().newJLabel(364, 390, 283, 160, 0,0,0,128,true, handler), Integer.valueOf(7));
-        layer.add(BentoHitBox4 = new SceneModify().newJLabel(59, 177, 615, 485, 0,0,0,128,true, handler), Integer.valueOf(6));
+        layer.add(BentoHitBox1 = new SceneModify().newJButton(123, 200, 224, 350, handler, null), Integer.valueOf(7));
+        layer.add(BentoHitBox2 = new SceneModify().newJButton(364, 200, 251, 175, handler, null), Integer.valueOf(7));
+        layer.add(BentoHitBox3 = new SceneModify().newJButton(364, 390, 283, 160, handler, null), Integer.valueOf(7));
+        layer.add(BentoHitBox4 = new SceneModify().newJButton(59, 177, 615, 485, handler, null), Integer.valueOf(6));
+
+        //Bento Food
+        layer.add(mainFood = new SceneModify().newJLabel(115, 224, 273, 350, null, "src/resource/cooking_game/main3.png"), Integer.valueOf(5));
+//        layer.add(sideFood = new SceneModify().newJLabel(x, y, w, h, handler, "path"), Integer.valueOf(5));
+        layer.add(dessertFood = new SceneModify().newJLabel(364, 372, 265, 185, null, "src/resource/cooking_game/dessert2.png"), Integer.valueOf(5));
+        layer.add(BentoBox = new SceneModify().newJLabel(71, 188, 585, 453, null, "src/resource/cooking_game/bento2.png"), Integer.valueOf(4));
 
 
         //Main Course

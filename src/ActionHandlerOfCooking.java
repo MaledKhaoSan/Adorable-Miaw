@@ -1,7 +1,7 @@
 import java.awt.event.*;
 
 
-public class ActionHandlerOfCooking implements ActionListener, MouseListener {
+public class ActionHandlerOfCooking implements ActionListener {
 
     private MiniGameCooking targetFrame;
 
@@ -51,12 +51,8 @@ public class ActionHandlerOfCooking implements ActionListener, MouseListener {
             System.out.println(defaultSlideMenu[currentIndex][2]);
             System.out.println(" ");
         }
-    }
 
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == targetFrame.BentoHitBox1){
+        else if (e.getSource() == targetFrame.BentoHitBox1){
             int numRows = mainSlideMenu.length;
             int numCols = mainSlideMenu[0].length;
             defaultSlideMenu = new String[numRows][numCols];
@@ -76,25 +72,5 @@ public class ActionHandlerOfCooking implements ActionListener, MouseListener {
 
             System.out.println("HitBox4");
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

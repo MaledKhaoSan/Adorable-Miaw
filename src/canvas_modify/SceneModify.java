@@ -65,7 +65,6 @@ public class SceneModify extends JLayeredPane{
         jButton.addActionListener(handler); // use the actionHandler parameter directly
         return jButton;
     }
-
     public JLabel newJLabel(int x, int y, int width, int height, MouseListener handler, String path) {
         JLabel jLabel = new JLabel(new ImageIcon(path));
         jLabel.setBounds(x, y, width, height);
@@ -81,6 +80,4 @@ public class SceneModify extends JLayeredPane{
         jLabel.addMouseListener(handler);
         return jLabel;
     }
-
-
 }
