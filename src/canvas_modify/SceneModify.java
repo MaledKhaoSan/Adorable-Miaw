@@ -72,6 +72,28 @@ public class SceneModify extends JLayeredPane{
         return jLabel;
     }
 
+    public JLabel newJLabel(int x, int y, int width, int height, String words) {
+        JLabel jLabel = null;
+        try {
+            //---- Load the font from a file
+            //File fontPath = new File("src/resource/fonts/Sabreen Regular Demo 400.ttf");
+            //Font font = Font.createFont(Font.TRUETYPE_FONT, fontPath);
+            //Font fontsize = font.deriveFont(30f);
+            //---- Set size & style
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/resource/fonts/gifted-personal.regular.otf")).deriveFont(Font.PLAIN,40f);
+            jLabel = new JLabel(words);
+            jLabel.setFont(font);
+            jLabel.setForeground(new Color(0, 0, 0, 111));
+            jLabel.setBounds(x, y, width, height);
+            jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        return jLabel;
+    }
+
     public JLabel newJLabel(int x, int y, int width, int height,int r,int g,int b,int a,boolean opaque, MouseListener handler) {
         JLabel jLabel = new JLabel();
         jLabel.setBounds(x, y, width, height);
