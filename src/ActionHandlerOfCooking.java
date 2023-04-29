@@ -4,8 +4,13 @@ import java.awt.event.*;
 public class ActionHandlerOfCooking implements ActionListener, MouseListener {
 
     private MiniGameCooking targetFrame;
-//    private int[] NewArray = new int[3];
-//    private int[] NewArray = new int[3];
+
+    private static int currentIndex = -1;
+    private static int[] defaultSlideMenu = {0, 0, 0};
+    public int[] mainSlideMenu = {1, 2, 3};
+    public int[] sideSlideMenu = {4, 5, 6};
+    public int[] dessertSlideMenu = {4, 5, 6};
+    public int[] boxSlideMenu = {7, 8, 9};
 
     public ActionHandlerOfCooking(MiniGameCooking targetFrame) {
         this.targetFrame = targetFrame;
@@ -21,8 +26,8 @@ public class ActionHandlerOfCooking implements ActionListener, MouseListener {
         }
 
         else if (e.getSource() == targetFrame.selectedFrameSlideRight | e.getSource() == targetFrame.selectedFrameSlideLeft){
-            targetFrame.currentIndex = (targetFrame.currentIndex + 1) % targetFrame.NewArray.length;
-            System.out.println(targetFrame.NewArray[targetFrame.currentIndex]);
+            currentIndex = (currentIndex + 1) % defaultSlideMenu.length;
+            System.out.println(defaultSlideMenu[currentIndex]);
         }
     }
 
@@ -30,11 +35,11 @@ public class ActionHandlerOfCooking implements ActionListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == targetFrame.BentoHitBox1){
-            System.arraycopy(targetFrame.arrayB, 0, targetFrame.NewArray, 0, targetFrame.arrayB.length);
+            System.arraycopy(mainSlideMenu, 0, defaultSlideMenu, 0, mainSlideMenu.length);
             System.out.println("HitBox1");
         }
         else if (e.getSource() == targetFrame.BentoHitBox4){
-            System.arraycopy(targetFrame.arrayA, 0, targetFrame.NewArray, 0, targetFrame.arrayA.length);
+            System.arraycopy(boxSlideMenu, 0, defaultSlideMenu, 0, boxSlideMenu.length);
             System.out.println("HitBox4");
         }
     }
