@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class SceneModify extends JLayeredPane{
-    private int currentFrame = 0;
+    private int currentFrame = 1;
     public JLayeredPane addJLayerPaneBackGround(String imagePath, String layerName, boolean visible){
         return new JLayeredPane() {
             @Override
@@ -27,7 +27,19 @@ public class SceneModify extends JLayeredPane{
             }};
     }
 
+    public JLayeredPane addJLayerPaneBackGround(String layerName, boolean visible){
+        return new JLayeredPane() {
+            {
+                setName(layerName);
+                setBounds(0,0, 1280,720);
+                setBackground(Color.white);
+                setOpaque(true);
+                setVisible(visible);
+            }};
+    }
+
     public JLabel addJLayerPaneAnimate(SpriteSheetSlice spriteSheetSlice) {
+        //interface เรียกใช้method getSlice();
         BufferedImage[] frames = spriteSheetSlice.getSlice();
         JLabel label = new JLabel() {
             @Override
@@ -40,7 +52,6 @@ public class SceneModify extends JLayeredPane{
                 setVisible(true);
             }
         };
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -65,10 +76,17 @@ public class SceneModify extends JLayeredPane{
         jButton.addActionListener(handler); // use the actionHandler parameter directly
         return jButton;
     }
-    public JLabel newJLabel(int x, int y, int width, int height, MouseListener handler, String path) {
+    public JLabel createJLabelWithMouse(int x, int y, int width, int height, MouseListener handler, String path) {
         JLabel jLabel = new JLabel(new ImageIcon(path));
         jLabel.setBounds(x, y, width, height);
         jLabel.addMouseListener(handler);
+        return jLabel;
+    }
+
+    public JLabel createJLabelWithKey(int x, int y, int width, int height, KeyListener handler, String path) {
+        JLabel jLabel = new JLabel(new ImageIcon(path));
+        jLabel.setBounds(x, y, width, height);
+        jLabel.addKeyListener(handler);
         return jLabel;
     }
 

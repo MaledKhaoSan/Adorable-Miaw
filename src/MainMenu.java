@@ -1,6 +1,15 @@
 import canvas_modify.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+
+
 
 public class MainMenu extends JFrame{
     private JFrame canvas = new JFrame();
@@ -21,5 +30,22 @@ public class MainMenu extends JFrame{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setVisible(true);
+        playBackgroundMusic("src/resource/audio/music.wav");
+    }
+
+    public void playBackgroundMusic(String filePath) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            System.out.println("Error playing background music: " + e.getMessage());
+        }
     }
 }
+
+
+
+
+

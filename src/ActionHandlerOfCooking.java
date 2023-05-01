@@ -1,14 +1,15 @@
+import javax.swing.*;
 import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
-public class ActionHandlerOfCooking implements ActionListener {
+public class ActionHandlerOfCooking implements ActionListener, KeyListener, MouseListener{
 
-    private MiniGameCooking targetFrame;
-
-    private int numRows = 3;
-    private int numCols = 3;
-    private static int currentIndex = -1;
-    private static String[][] defaultSlideMenu = { {"","",""}, {"","",""}, {"","",""} };
+    private final MiniGameCooking targetFrame;
+    private static int currentIndex = 0;
+    private static JLabel currentMenu;
+    private static String[][] defaultSlideMenu = { {null,null,null},{null,null,null},{null,null,null} };
     public String[][] mainSlideMenu = {
             //mainIcon1
             {"Spam Musubi", "src/resource/cooking_game/mainIcon1.png", "src/resource/cooking_game/main1.png"},
@@ -33,53 +34,101 @@ public class ActionHandlerOfCooking implements ActionListener {
             //dessertIcon2
             {"Matcha Roll", "src/resource/cooking_game/dessertIcon2.png", "src/resource/cooking_game/dessert2.png"},
             //dessertIcon3
-            {"Strawberry Millefeuilie", "src/resource/cooking_game/dessertIcon3.png", "src/resource/cooking_game/dessert3.png"}
+            {"Strawberry cake", "src/resource/cooking_game/dessertIcon3.png", "src/resource/cooking_game/dessert3.png"}
     };
-
-    public String[][] boxSlideMenu = {
-            //boxIcon1
-            {"Purple Bento Box", "src/resource/cooking_game/boxIcon1.png", "src/resource/cooking_game/bento1.png"},
-            //boxIcon2
-            {"Yellow Bento Box", "src/resource/cooking_game/boxIcon2.png", "src/resource/cooking_game/bento2.png"},
-            //boxIcon3
-            {"Orange Bento Box", "src/resource/cooking_game/boxIcon3.png", "src/resource/cooking_game/bento3.png"}
-    };
-
-//    public int[] boxSlideMenu = {7, 8, 9};
-
     public ActionHandlerOfCooking(MiniGameCooking targetFrame) {
         this.targetFrame = targetFrame;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        //Selected Button
         if (e.getSource() == targetFrame.selectedFrameButton){
-            System.out.println("Select Food");
-            System.out.println(defaultSlideMenu[currentIndex][2]);
-
+            currentMenu.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][2]));
+            currentMenu.setName(defaultSlideMenu[currentIndex][0]);
         }
 
-        else if (e.getSource() == targetFrame.selectedFrameSlideRight | e.getSource() == targetFrame.selectedFrameSlideLeft){
+        else if (e.getSource() == targetFrame.selectedFrameSlideRight){
             currentIndex = (currentIndex + 1) % defaultSlideMenu.length;
-            System.out.println(defaultSlideMenu[currentIndex][0]);
-            System.out.println(defaultSlideMenu[currentIndex][1]);
-            System.out.println(defaultSlideMenu[currentIndex][2]);
-            System.out.println(" ");
+            targetFrame.selectedFrameName.setText(defaultSlideMenu[currentIndex][0]);
+            targetFrame.selectedFrameFood.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][1]));
+        }
+        else if (e.getSource() == targetFrame.selectedFrameSlideLeft){
+            //currentIndex = (currentIndex - 1 + 3)% 3
+            currentIndex = (currentIndex - 1 + defaultSlideMenu.length) % defaultSlideMenu.length;
+            targetFrame.selectedFrameName.setText(defaultSlideMenu[currentIndex][0]);
+            targetFrame.selectedFrameFood.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][1]));
         }
 
         else if (e.getSource() == targetFrame.BentoHitBox1){
-            defaultSlideMenu = new String[numRows][numCols];
-            for (int i = 0; i < numRows; i++) {
-                System.arraycopy(mainSlideMenu[i], 0, defaultSlideMenu[i], 0, numCols);
-            }
-            System.out.println("HitBox1");
+            updateSlideMenu(mainSlideMenu, targetFrame.mainFood, 185,160);
         }
-        else if (e.getSource() == targetFrame.BentoHitBox4){
-            defaultSlideMenu = new String[numRows][numCols];
-            for (int i = 0; i < numRows; i++) {
-                System.arraycopy(boxSlideMenu[i], 0, defaultSlideMenu[i], 0, numCols);
-            }
-            System.out.println("HitBox4");
+        else if (e.getSource() == targetFrame.BentoHitBox2){
+            updateSlideMenu(sideSlideMenu, targetFrame.sideFood, 425, 140);
         }
+        else if (e.getSource() == targetFrame.BentoHitBox3){
+            updateSlideMenu(dessertSlideMenu, targetFrame.dessertFood, 460, 335);
+        }
+    }
+
+    public void updateSlideMenu(String[][] targetSlide, JLabel targetMenu, int arrowX, int arrowY){
+        int numRows = 3;
+        int numCols = 3;
+        defaultSlideMenu = new String[numRows][numCols];
+        for (int i = 0; i < numRows; i++) {
+            System.arraycopy(targetSlide[i], 0, defaultSlideMenu[i], 0, numCols);
+        }
+
+        targetFrame.selectedFrameName.setText(defaultSlideMenu[currentIndex][0]);
+        targetFrame.selectedFrameFood.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][1]));
+        targetFrame.selectedFrame.setVisible(true);
+        targetFrame.bentoArrow.setLocation(arrowX,arrowY);
+        currentMenu = targetMenu;
+
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_SPACE & targetFrame.intro.isVisible()) {
+            if (targetFrame.tutorial1.isVisible()) {
+                targetFrame.tutorial1.setVisible(false);
+            } else if (targetFrame.tutorial2.isVisible()) {
+                targetFrame.tutorial2.setVisible(false);
+            } else if (targetFrame.tutorial3.isVisible()) {
+                new Thread(new RunnableOfCooking(1, targetFrame, this), "intro").start();
+            }
+        }
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getSource() == targetFrame.intro){
+            targetFrame.intro.requestFocusInWindow();
+        }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

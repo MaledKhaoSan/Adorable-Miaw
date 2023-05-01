@@ -9,29 +9,18 @@ import java.awt.event.KeyListener;
 
 
 public class ActionHandlerOfTyping implements ActionListener, KeyListener {
-    private int wordsLength, correctWords, incorrectWords, times;
+    private int wordsLength, correctWords, incorrectWords, waiter =1, countdown =3, times = 5;
     private MiniGameTyping targetFrame;
     private String targetActionID;
     private JLabel targetLabel;
-    public ActionHandlerOfTyping(String targetActionID, MiniGameTyping targetFrame, JLabel targetLabel) {
-        this.targetActionID = targetActionID;
-        this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
-    }
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
-    }
-
-    public ActionHandlerOfTyping(MiniGameTyping targetFrame, JLabel targetLabel) {
-        this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
     }
 
     public void startGameTimer() {
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
-
-        new Thread(new RunnableOfTyping(60, targetFrame, this), targetFrame.difficulty).start();
+        new Thread(new RunnableOfTyping(times , targetFrame, this), targetFrame.difficulty).start();
 
     }
     public void endGameTimer(int wordsLength) {
@@ -80,7 +69,7 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
                 targetFrame.typingTutorials2.setVisible(false);}
             else if (targetFrame.typingTutorials3.isVisible()) {
                 targetFrame.typingTutorials3.setVisible(false);
-                new Thread(new RunnableOfTyping(3, targetFrame, this), "TypingCountDown").start();
+                new Thread(new RunnableOfTyping(countdown, targetFrame, this), "TypingCountDown").start();
             }
             else {
                 System.out.println("ENDING");
@@ -98,7 +87,7 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
         else if (e.getSource() == targetFrame.ScoreBaordButton2) {
 
             targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(30));
-            new Thread(new RunnableOfTyping(1, targetFrame, this), "waiter").start();
+            new Thread(new RunnableOfTyping(waiter, targetFrame, this), "waiter").start();
         }
     }
 

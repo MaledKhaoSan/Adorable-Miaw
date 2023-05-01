@@ -86,14 +86,14 @@ public class MiniGameTyping extends JFrame{
 
         layer.add(ScoreBaordBG = new JLabel(new ImageIcon("src/resource/typing_game/ScoreBaordBG.png")) {{
 //            addMouseListener(new ActionHandlerOfTyping("ScoreBaordBG",  MiniGameTyping.this, ScoreBaordBG));
-            setBounds(399, 35, 480, 640);
+            setBounds(399, 65, 480, 530);
             setVisible(false);
             add(ScoreBaordButton1 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBaordButton1.png")) {{
-                setBounds((480/2) - (145/2) - 120, 640-50, 145, 45);
+                setBounds((480/2) - (145/2) - 120, 530-70, 145, 45);
                 addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
             }},  Integer.valueOf(2));
             add(ScoreBaordButton2 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBaordButton1.png")) {{
-                setBounds((480/2)- (145/2) + 120, 640-50, 145, 45);
+                setBounds((480/2)- (145/2) + 120, 530-70, 145, 45);
                 addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
             }},  Integer.valueOf(2));
         }},  Integer.valueOf(10));
