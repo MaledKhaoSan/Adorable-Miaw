@@ -29,16 +29,6 @@ public class MainStage extends JFrame{
         layer.add(minigameCleaningEnter = new SceneModify().createJLabelWithMouse(475, 475, 330, 250, handler, "src/resource/stage_canvas/minigameCleaningEnter.png"), Integer.valueOf(0)  );
 
 
-
-
-
-
-
-
-
-
-
-
         layer.add(minigameCookingEnter = new JLabel() {{
             ImageIcon minigameCookingEnter_Icon = new ImageIcon("src/resource/stage_canvas/minigameCookingEnter.png");
             setIcon(minigameCookingEnter_Icon);
