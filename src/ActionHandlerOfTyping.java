@@ -1,15 +1,14 @@
 import canvas_modify.FadeInAnimate;
+import canvas_modify.FadeOutAnimate;
 import canvas_modify.SceneModify;
+import canvas_modify.introAnimate;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 
-public class ActionHandlerOfTyping implements ActionListener, KeyListener {
-    private int wordsLength, correctWords, incorrectWords, waiter =1, countdown =3, times = 5;
+public class ActionHandlerOfTyping implements ActionListener, KeyListener, MouseListener {
+    private int wordsLength, correctWords, incorrectWords, waiter =1, prepareTime =3, gameTime = 60, tutorialsTime = 2;
     private MiniGameTyping targetFrame;
     private String targetActionID;
     private JLabel targetLabel;
@@ -17,11 +16,15 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
         this.targetFrame = targetFrame;
     }
 
+    public void prepareTimer() {
+        new Thread(new RunnableOfTyping(prepareTime , targetFrame, this), "prepareCountDown").start();
+
+    }
     public void startGameTimer() {
+        targetFrame.requestFocusInWindow();
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
-        new Thread(new RunnableOfTyping(times , targetFrame, this), targetFrame.difficulty).start();
-
+        new Thread(new RunnableOfTyping(gameTime , targetFrame, this), targetFrame.difficulty).start();
     }
     public void endGameTimer(int wordsLength) {
         this.wordsLength = wordsLength;
@@ -34,15 +37,22 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
         }
         System.out.println(correctWords +" "+ incorrectWords);
 
-        targetFrame.ScoreBaordBG.setVisible(true);
+        targetFrame.ScoreBoardBG.setVisible(true);
+    }
+    public void stageScene(){
+        new MainStage();
+        targetFrame.setVisible(false);
     }
 
-
-
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void mousePressed(MouseEvent e) {
+        if (e.getSource() == targetFrame.intro) {
+            targetFrame.intro.requestFocusInWindow();
+        }
+    }
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("Pressed");
         if (targetFrame.isCurrentWordRunning()) {
             char typedChar = e.getKeyChar();
             if (typedChar == targetFrame.getCurrentWord().charAt(targetFrame.getCurrentWordStart())) {
@@ -61,41 +71,37 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener {
         }
 
         //Tutorials <3
-        else {
-            //เปลี่ยนไปใช้วิธี forLoop ArrayList
-            if (targetFrame.typingTutorials1.isVisible()) {
-                targetFrame.typingTutorials1.setVisible(false);}
-            else if (targetFrame.typingTutorials2.isVisible()) {
-                targetFrame.typingTutorials2.setVisible(false);}
-            else if (targetFrame.typingTutorials3.isVisible()) {
-                targetFrame.typingTutorials3.setVisible(false);
-                new Thread(new RunnableOfTyping(countdown, targetFrame, this), "TypingCountDown").start();
+        else  if (e.getKeyCode() == KeyEvent.VK_SPACE & targetFrame.intro.isVisible()) {
+            if (targetFrame.tutorial1.isVisible()) {
+                targetFrame.tutorial1.setVisible(false);
+            } else if (targetFrame.tutorial2.isVisible()) {
+                targetFrame.tutorial2.setVisible(false);
+            } else if (targetFrame.tutorial3.isVisible()) {
+                new Thread(new RunnableOfTyping(tutorialsTime, targetFrame, this), "tutorialTransition").start();
             }
-            else {
-                System.out.println("ENDING");
-            }
+        }
+    }@Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == targetFrame.ScoreBoardButton1) {
+            System.out.println("Clicked");
+        }
+        else if (e.getSource() == targetFrame.ScoreBoardButton2) {
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(30));
+            new Thread(new RunnableOfTyping(prepareTime, targetFrame, this), "stageTransition").start();
         }
     }
     @Override
     public void keyReleased(KeyEvent e) {}
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == targetFrame.ScoreBaordButton1) {
-            System.out.println("Clicked");
-        }
-        else if (e.getSource() == targetFrame.ScoreBaordButton2) {
-
-            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(30));
-            new Thread(new RunnableOfTyping(waiter, targetFrame, this), "waiter").start();
-        }
-    }
-
-    public void stageScene(){
-        new MainStage();
-        targetFrame.setVisible(false);
-
-    }
+    public void keyTyped(KeyEvent e) {}
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 
 //        targetFrame.layer.add( CatType.catCreate(new CatWalking()) {{
 //            setBounds(0, 0, 1280, 720);

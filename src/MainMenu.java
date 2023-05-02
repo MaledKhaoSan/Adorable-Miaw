@@ -30,7 +30,7 @@ public class MainMenu extends JFrame{
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setVisible(true);
-        playBackgroundMusic("src/resource/audio/music.wav");
+        playBackgroundMusic("src/resource/audio/Attention.wav");
     }
 
     public void playBackgroundMusic(String filePath) {

@@ -26,6 +26,8 @@ public class RunnableOfBuilding implements Runnable{
                 targetFrame.setVisible(false);
 
             } catch (InterruptedException ignored) {}
+
+
         }
 
     }

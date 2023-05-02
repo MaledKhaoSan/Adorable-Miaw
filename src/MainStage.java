@@ -17,24 +17,28 @@ public class MainStage extends JFrame{
     public JButton minigameCleaningUIButton1, minigameCleaningUIButton2, minigameCleaningUIButton3;
     public JLabel minigameCookingUI;
     public JButton minigameCookingUIButton1, minigameCookingUIButton2, minigameCookingUIButton3, minigameCookingDifficulty1, minigameCookingDifficulty2, minigameCookingDifficulty3;
+    public ActionHandlerOfStage handler;
 
 
     public JLabel minigameTypingDifficultyUI;
     public MainStage() {
         this.setBackground(Color.BLACK);
+        handler = new ActionHandlerOfStage(this);
         layer = new SceneModify().addJLayerPaneBackGround("src/resource/stage_canvas/background.png", "layer", true);
-        layer.add(minigameTypingEnter = new JLabel() {{
-            ImageIcon minigameTypingEnter_Icon = new ImageIcon("src/resource/stage_canvas/minigameTypingEnter.png");
-            setIcon(minigameTypingEnter_Icon);
-            addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameTypingEnter));
-            setBounds(126, 419, 330, 250);
-        }}, Integer.valueOf(0));
-        layer.add(minigameCleaningEnter = new JLabel() {{
-            ImageIcon minigameCleaningEnter_Icon = new ImageIcon("src/resource/stage_canvas/minigameCleaningEnter.png");
-            setIcon(minigameCleaningEnter_Icon);
-            addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameCleaningEnter));
-            setBounds(475, 475, 330, 250);
-        }}, Integer.valueOf(0));
+        layer.add(minigameTypingEnter = new SceneModify().createJLabelWithMouse(126, 419,330,250, handler, "src/resource/stage_canvas/minigameTypingEnter.png"), Integer.valueOf(0));
+        layer.add(minigameCleaningEnter = new SceneModify().createJLabelWithMouse(475, 475, 330, 250, handler, "src/resource/stage_canvas/minigameCleaningEnter.png"), Integer.valueOf(0)  );
+
+
+
+
+
+
+
+
+
+
+
+
         layer.add(minigameCookingEnter = new JLabel() {{
             ImageIcon minigameCookingEnter_Icon = new ImageIcon("src/resource/stage_canvas/minigameCookingEnter.png");
             setIcon(minigameCookingEnter_Icon);
@@ -51,11 +55,11 @@ public class MainStage extends JFrame{
             addMouseListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUI));
             setBounds((1280/2) - (580/2), 145, 580, 332);
             setVisible(false);
-            add(minigameTypingUIButton1 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameTypingUIButton1 = new JButton(new ImageIcon("src/resource/stage_canvas/UIBack.png")) {{
                 setBounds(580/2 - 145/2 - 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUIButton1));
             }},  Integer.valueOf(2));
-            add(minigameTypingUIButton2 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameTypingUIButton2 = new JButton(new ImageIcon("src/resource/stage_canvas/UINext.png")) {{
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUIButton2));
             }},  Integer.valueOf(2));
@@ -71,7 +75,7 @@ public class MainStage extends JFrame{
                 setBounds(395, 123, 135, 85); setBorder(null); setPressedIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficulty4.png")); /* Remove border-graphics.*/
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingDifficulty3)); setVisible(false);
             }},  Integer.valueOf(2));
-            add(minigameTypingUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameTypingUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/UIBack.png")) {{
                 setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameTypingUIButton3)); setVisible(false);
             }},  Integer.valueOf(2));
@@ -83,17 +87,17 @@ public class MainStage extends JFrame{
             setVisible(false);
 
             add(minigameCleaningUIButton1 = new JButton() {{
-                setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
+                setIcon(new ImageIcon("src/resource/stage_canvas/UIBack.png"));
                 setBounds(580/2 - 145/2 - 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this));
             }},  Integer.valueOf(2));
             add(minigameCleaningUIButton2 = new JButton() {{
-                setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
+                setIcon(new ImageIcon("src/resource/stage_canvas/UINext.png"));
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this));
             }},  Integer.valueOf(2));
 
-            add(minigameCleaningUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameCleaningUIButton3 = new JButton(new ImageIcon("src/resource/stage_canvas/UIBack.png")) {{
                 setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
             }},  Integer.valueOf(2));
@@ -105,16 +109,16 @@ public class MainStage extends JFrame{
             setBounds((1280/2) - (580/2), 145, 580, 332);
             setVisible(false);
             add(minigameCookingUIButton1 = new JButton() {{
-                setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
+                setIcon(new ImageIcon("src/resource/stage_canvas/UIBack.png"));
                 setBounds(580/2 - 145/2 - 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameCookingUIButton1));
             }},  Integer.valueOf(2));
             add(minigameCookingUIButton2 = new JButton() {{
-                setIcon(new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png"));
+                setIcon(new ImageIcon("src/resource/stage_canvas/UINext.png"));
                 setBounds(580/2 - 145/2 + 130, 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this, minigameCookingUIButton2));
             }},  Integer.valueOf(2));
-            add(minigameCookingUIButton3 = new JButton( new ImageIcon("src/resource/stage_canvas/minigameUIButton1.png")) {{
+            add(minigameCookingUIButton3 = new JButton( new ImageIcon("src/resource/stage_canvas/UIBack.png")) {{
                 setBounds(580/2 - 145/2 , 332 - 50, 145, 45);
                 addActionListener(new ActionHandlerOfStage(MainStage.this)); setVisible(false);
             }},  Integer.valueOf(2));

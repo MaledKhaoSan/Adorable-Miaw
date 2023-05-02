@@ -8,8 +8,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class SceneModify extends JLayeredPane{
+public class SceneModify extends JLayeredPane implements Runnable{
     private int currentFrame = 1;
+    private BufferedImage[] frames;
+    private JLabel label;
+
+//    public SceneModify() {}
+//    public SceneModify(BufferedImage[] frames, JLabel label) {
+//        this.frames = frames;
+//        this.label = label;
+//    }
+
     public JLayeredPane addJLayerPaneBackGround(String imagePath, String layerName, boolean visible){
         return new JLayeredPane() {
             @Override
@@ -58,7 +67,6 @@ public class SceneModify extends JLayeredPane{
                 for (int i = 0; i < frames.length; i++) {
                     currentFrame = i;
                     label.repaint();
-
                     try { Thread.sleep(100); }
                     catch (InterruptedException ex) { ex.printStackTrace();}
                 }
@@ -68,8 +76,26 @@ public class SceneModify extends JLayeredPane{
         return label;
     }
 
+    public void run() {
+        if (Thread.currentThread().getName().equals("typingIntro")) {
+            for (int i = 0; i < frames.length; i++) {
+                currentFrame = i;
+                label.repaint();
+                try { Thread.sleep(100); }
+                catch (InterruptedException ex) { ex.printStackTrace();}
+            }
+//            for (int i = 0; i < frames.length; i++) {
+//                currentFrame = i;
+//                label.repaint();
+//            }
+//            try {
+//                Thread.sleep(100); // wait for 1 second
+//            } catch (InterruptedException e) {}
+        }
+    }
 
-    public JButton newJButton(int x, int y, int width, int height, ActionListener handler, String path) {
+
+    public JButton createJButton(int x, int y, int width, int height, ActionListener handler, String path) {
         JButton jButton = new JButton(new ImageIcon(path));
         jButton.setBounds(x, y, width, height);
         jButton.setBorder(null);
@@ -90,7 +116,7 @@ public class SceneModify extends JLayeredPane{
         return jLabel;
     }
 
-    public JLabel newJLabel(int x, int y, int width, int height, String words) {
+    public JLabel createJLabelWithFont(int x, int y, int width, int height, String words) {
         JLabel jLabel = null;
         try {
             //---- Load the font from a file
@@ -102,6 +128,28 @@ public class SceneModify extends JLayeredPane{
             jLabel = new JLabel(words);
             jLabel.setFont(font);
             jLabel.setForeground(new Color(0, 0, 0, 111));
+            jLabel.setBounds(x, y, width, height);
+            jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        return jLabel;
+    }
+
+    public JLabel createJLabelWithHint(int x, int y, int width, int height) {
+        JLabel jLabel = null;
+        try {
+            //---- Load the font from a file
+            //File fontPath = new File("src/resource/fonts/Sabreen Regular Demo 400.ttf");
+            //Font font = Font.createFont(Font.TRUETYPE_FONT, fontPath);
+            //Font fontsize = font.deriveFont(30f);
+            //---- Set size & style
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/resource/fonts/Nightydemo.otf")).deriveFont(Font.PLAIN,40f);
+            jLabel = new JLabel();
+            jLabel.setFont(font);
+            jLabel.setForeground(new Color(0, 0, 0, 176));
             jLabel.setBounds(x, y, width, height);
             jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 

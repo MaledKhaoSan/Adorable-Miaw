@@ -22,11 +22,11 @@ public class MiniGameTyping extends JFrame{
 
 
 
-    public JLayeredPane layer;
-    public JLabel typingTutorials1, typingTutorials2, typingTutorials3;
+    public JLayeredPane layer, intro;
+    public JLabel tutorial1, tutorial2, tutorial3;
     public JLabel typingCountdown;
-    public JLabel ScoreBaordBG;
-    public JButton ScoreBaordButton1, ScoreBaordButton2;
+    public JLabel ScoreBoardBG;
+    public JButton ScoreBoardButton1, ScoreBoardButton2;
 
     Font font;
 
@@ -51,6 +51,13 @@ public class MiniGameTyping extends JFrame{
             }
         };
 
+        layer.add(intro =  new SceneModify().addJLayerPaneBackGround("intro_layer", true), Integer.valueOf(10));
+        intro.addMouseListener(new ActionHandlerOfTyping(MiniGameTyping.this));
+        intro.addKeyListener(new ActionHandlerOfTyping(MiniGameTyping.this)); intro.setFocusable(true);
+        intro.add(tutorial1 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial1.png"), Integer.valueOf(5));
+        intro.add(tutorial2 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial2.png"), Integer.valueOf(4));
+        intro.add(tutorial3 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial3.png"), Integer.valueOf(3));
+
 
         wordLabel = new JLabel();
         wordLabel.setBounds((1280/2) - 400, (720/2) - 250, 800, 500);
@@ -64,35 +71,17 @@ public class MiniGameTyping extends JFrame{
             setHorizontalAlignment(SwingConstants.CENTER);
         }});
 
-        layer.add(typingTutorials1 = new JLabel() {{
-            ImageIcon typingTutorials1_Icon = new ImageIcon("src/resource/typing_game/minigameTypingTutorials1.png");
-            setIcon(typingTutorials1_Icon);
-            setBounds((1280/2) - (580/2), 145, 580, 332);
-            setVisible(true);
-        }},  Integer.valueOf(5));
-        layer.add(typingTutorials2 = new JLabel() {{
-            ImageIcon typingTutorials2_Icon = new ImageIcon("src/resource/typing_game/minigameTypingTutorials2.png");
-            setIcon(typingTutorials2_Icon);
-            setBounds((1280/2) - (580/2), 145, 580, 332);
-            setVisible(true);
-        }},  Integer.valueOf(4));
-        layer.add(typingTutorials3 = new JLabel() {{
-            ImageIcon typingTutorials3_Icon = new ImageIcon("src/resource/typing_game/minigameTypingTutorials3.png");
-            setIcon(typingTutorials3_Icon);
-            setBounds((1280/2) - (580/2), 145, 580, 332);
-            setVisible(true);
-        }},  Integer.valueOf(3));
 
 
-        layer.add(ScoreBaordBG = new JLabel(new ImageIcon("src/resource/typing_game/ScoreBaordBG.png")) {{
-//            addMouseListener(new ActionHandlerOfTyping("ScoreBaordBG",  MiniGameTyping.this, ScoreBaordBG));
+        layer.add(ScoreBoardBG = new JLabel(new ImageIcon("src/resource/typing_game/ScoreBoardBG.png")) {{
+            //addMouseListener(new ActionHandlerOfTyping("ScoreBoardBG",  MiniGameTyping.this, ScoreBoardBG));
             setBounds(399, 65, 480, 530);
             setVisible(false);
-            add(ScoreBaordButton1 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBaordButton1.png")) {{
+            add(ScoreBoardButton1 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBoardButton1.png")) {{
                 setBounds((480/2) - (145/2) - 120, 530-70, 145, 45);
                 addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
             }},  Integer.valueOf(2));
-            add(ScoreBaordButton2 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBaordButton1.png")) {{
+            add(ScoreBoardButton2 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBoardButton1.png")) {{
                 setBounds((480/2)- (145/2) + 120, 530-70, 145, 45);
                 addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
             }},  Integer.valueOf(2));
@@ -143,16 +132,16 @@ public class MiniGameTyping extends JFrame{
 //                    // Increase alpha by a small amount
 //                    alpha += 0.01f;
 //
-//                    // Set alpha of ScoreBaordBG and its child components
-//                    ScoreBaordBG.setOpaque(false);
-//                    ScoreBaordBG.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBaordBG.repaint();
-//                    ScoreBaordButton1.setOpaque(false);
-//                    ScoreBaordButton1.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBaordButton1.repaint();
-//                    ScoreBaordButton2.setOpaque(false);
-//                    ScoreBaordButton2.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBaordButton2.repaint();
+//                    // Set alpha of ScoreBoardBG and its child components
+//                    ScoreBoardBG.setOpaque(false);
+//                    ScoreBoardBG.setBackground(new Color(0, 0, 0, alpha));
+//                    ScoreBoardBG.repaint();
+//                    ScoreBoardButton1.setOpaque(false);
+//                    ScoreBoardButton1.setBackground(new Color(0, 0, 0, alpha));
+//                    ScoreBoardButton1.repaint();
+//                    ScoreBoardButton2.setOpaque(false);
+//                    ScoreBoardButton2.setBackground(new Color(0, 0, 0, alpha));
+//                    ScoreBoardButton2.repaint();
 //
 //                    try {
 //                        // Sleep for a short amount of time to slow down the animation

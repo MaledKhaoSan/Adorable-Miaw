@@ -1,3 +1,7 @@
+import canvas_modify.SceneModify;
+import canvas_modify.introAnimate;
+
+import javax.swing.*;
 
 public class RunnableOfTyping implements Runnable{
     private int countdown;
@@ -13,7 +17,7 @@ public class RunnableOfTyping implements Runnable{
 
     @Override
     public void run() {
-        if (Thread.currentThread().getName().equals("TypingCountDown")) {
+        if (Thread.currentThread().getName().equals("prepareCountDown")) {
             try {
                 while (countdown > 0) {
                     System.out.println("Game Start in "+countdown);
@@ -71,15 +75,32 @@ public class RunnableOfTyping implements Runnable{
             } catch (InterruptedException e) {}
         }
 
-        else if (Thread.currentThread().getName().equals("waiter")) {
+        else if (Thread.currentThread().getName().equals("stageTransition")) {
             try {
                 while (countdown > 0) {
                     countdown--;
                     Thread.sleep(1000);
                 }
                 targetActionHandler.stageScene();
-
             } catch (InterruptedException ignored) {}
+        }
+
+
+
+        else if (Thread.currentThread().getName().equals("tutorialTransition")) {
+            JLabel tutorialTransition = new SceneModify().addJLayerPaneAnimate(new introAnimate());
+            targetFrame.layer.add(tutorialTransition,  Integer.valueOf(11));
+            try {
+                while (countdown > 0) {
+                    if (countdown == 1){
+                        targetFrame.intro.setVisible(false);
+                    }
+                    countdown--;
+                    Thread.sleep(1000);
+                }
+                targetActionHandler.prepareTimer();
+                targetFrame.remove(tutorialTransition);
+            } catch (InterruptedException e) {}
         }
 
     }

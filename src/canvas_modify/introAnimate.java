@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class IntroFadeInAnimate implements SpriteSheetSlice{
+public class introAnimate implements SpriteSheetSlice, Runnable{
     private BufferedImage fadeInSpriteSheet = null;
     private BufferedImage fadeOutSpriteSheet = null;
     private int frameCount;
@@ -14,9 +14,7 @@ public class IntroFadeInAnimate implements SpriteSheetSlice{
     private int frameHeight;
 
 
-    public IntroFadeInAnimate(JFrame jFrame, JLayeredPane jLayerPane) {
 
-    }
 
     @Override
     public BufferedImage[] getSlice() {
@@ -26,6 +24,7 @@ public class IntroFadeInAnimate implements SpriteSheetSlice{
         BufferedImage[] frames = new BufferedImage[firstFrames.length + secFrames.length];
         System.arraycopy(firstFrames, 0, frames, 0, firstFrames.length);
         System.arraycopy(secFrames, 0, frames, 10, secFrames.length);
+        new Thread(new introAnimate()).start();
         return frames;
     }
 
@@ -44,5 +43,14 @@ public class IntroFadeInAnimate implements SpriteSheetSlice{
             return frames;
         }
         catch (IOException ex) {ex.printStackTrace(); return null; }
+    }
+
+    @Override
+    public void run() {
+        try {
+            System.out.println("Test");
+            Thread.sleep(100);
+        } catch (InterruptedException e) {}
+
     }
 }
