@@ -1,101 +1,64 @@
-import canvas_modify.FadeInAnimate;
+import canvas_modify.SceneFadeIn;
 import canvas_modify.SceneModify;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 
-public class ActionHandlerOfCleaning extends JFrame implements ActionListener, MouseListener {
+public class ActionHandlerOfCleaning implements ActionListener, KeyListener, MouseListener {
     private MiniGameCleaning targetFrame;
-    private CleaningMissionCreate cleaningMissionCreate;
-    private String targetActionID;
-    private String targetRequestID;
-    private JLabel targetLabel;
-    private JButton targetButton;
-    private JLayeredPane targetLayer;
-
-    //Heart Score
-//    private RecieveAndBuy getAccount;
-//    public ActionHandlerOfCooking(RecieveAndBuy getAccount){
-//        this.getAccount = getAccount;
-//    }
+    private final static int tutorialsTime = 1;
+    private Account account;
+    private final AccountSaved accountSaved = new AccountSaved();
 
 
-    public ActionHandlerOfCleaning(String targetActionID, MiniGameCleaning targetFrame, JButton targetButton) {
-        this.targetActionID = targetActionID;
-        this.targetFrame = targetFrame;
-        this.targetButton = targetButton;
-    }
-    public ActionHandlerOfCleaning() {}
-    public ActionHandlerOfCleaning(String targetActionID, MiniGameCleaning targetFrame, JLabel targetLabel) {this.targetActionID = targetActionID; this.targetFrame = targetFrame; this.targetLabel = targetLabel;}
-    public ActionHandlerOfCleaning(String targetActionID) {
-        this.targetActionID = targetActionID;
-    }
-    public ActionHandlerOfCleaning(MiniGameCleaning targetFrame, JLabel targetLabel){
-        this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
-    }
 
-    public ActionHandlerOfCleaning(CleaningMissionCreate cleaningMissionCreate, JLabel targetLabel){
-        this.cleaningMissionCreate = cleaningMissionCreate;
-        this.targetLabel = targetLabel;
-    }
-
-    public void Cleaning_MiniGameFinished() {
-        System.out.println("Minigame Finished");
-    }
+    public ActionHandlerOfCleaning(MiniGameCleaning targetFrame) { this.targetFrame = targetFrame;}
+    public void startGameTimer() { targetFrame.requestFocusInWindow();new CleaningMissionCreate(targetFrame, targetFrame.Challenge1, "");}
+    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
 
     @Override
-    public void actionPerformed(ActionEvent event) {}
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == targetFrame.ScoreBoardButton1) {
+            targetFrame.ScoreBoardButton1.removeActionListener(this);
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == targetFrame.Button1) {
-            System.out.println("Clicked on Label 1");
-            new CleaningMissionCreate(targetFrame, targetFrame.Challenge1, "");
+            System.out.println("[ already set Minigame Cleaning Cooldown ]");
+            account = accountSaved.load();
+            account.setCooldown(300);
+            accountSaved.save();
+            Thread thread = new Thread(new CooldownAftergame()); thread.start();
+
+
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
+            new Thread(new RunnableOfCleaning(tutorialsTime, targetFrame, this), "stageTransition").start();
         }
-        else if (e.getSource() == targetFrame.Button2) {
-            System.out.println("Clicked on Label 2");
-            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()));
+    }
 
-//            targetFrame.layer.add(new CatWalking("src/resource/typing_game/CatSpriteSheet2.png"){{
-//                setBounds(0, 0, 1280, 720);
-//            }},  Integer.valueOf(11));
-
-        } else if (e.getSource() == targetFrame.scoreBoard) {
-            System.out.println("Can Click");
-//            targetFrame.Challenge1.setVisible(false);
-//            targetFrame.Challenge2.setVisible(true);
-//            targetFrame.Challenge2.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge2));
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //Tutorials <3
+        if (e.getKeyCode() == KeyEvent.VK_SPACE & targetFrame.intro.isVisible()) {
+            if (targetFrame.tutorial1.isVisible()) {
+                targetFrame.tutorial1.setVisible(false);
+            } else if (targetFrame.tutorial2.isVisible()) {
+                targetFrame.intro.removeMouseListener(this);
+                targetFrame.intro.removeKeyListener(this);
+                int tutorialsTime = 2;
+                startGameTimer();
+                new Thread(new RunnableOfCleaning(tutorialsTime, targetFrame, this), "tutorialTransition").start();
+            }
         }
-//            targetFrame.add(new CleaningMissionCreate());
-//            System.out.println(targetFrame.getBounds());
-//            Account.setBalance(Account.getBalance() + 10);
-
     }
-
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
+    public void mousePressed(MouseEvent e) { if (e.getSource() == targetFrame.intro) { targetFrame.intro.requestFocusInWindow(); } }
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
+    public void keyTyped(KeyEvent e) {}
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
+    public void mouseReleased(MouseEvent e) {}
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }

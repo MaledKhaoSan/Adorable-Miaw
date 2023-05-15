@@ -1,16 +1,21 @@
 import canvas_modify.*;
-import javax.swing.*;
+
 import java.util.Random;
 
 public class RunnableOfCooking implements Runnable {
     private int countdown;
     private final MiniGameCooking targetFrame;
     private final ActionHandlerOfCooking targetActionHandler;
-    private int score;
+    private static int score = 0;
+    private static boolean bentoChecking = false;
     private static String[][] puzzleSlideMenu = {
-            {"Spam Musubi", "Karaage", "Japanese Pancake", "Musubi, Karaage, Pancake"},
-            {"Yakisoba", "Saba Shioyaki", "Matcha Roll", "Yakisoba, Saba, Matcha"},
-            {"Onigiri", "Steak", "Strawberry cake", "Onigiri, Steak, Strawberry Cake"}
+            {"Spam Musubi", "Karaage", "Japanese Pancake", "Musubi : Karaage : Pancake"},
+            {"Yakisoba", "Saba Shioyaki", "Matcha Roll", "Yakisoba : Saba : Matcha"},
+            {"Onigiri", "Steak", "Strawberry cake", "Onigiri : Steak : Cake"},
+
+            {"Spam Musubi", "Saba Shioyaki", "Strawberry cake", "Musubi : Saba : cake"},
+            {"Yakisoba", "Karaage", "Japanese Pancake", "Yakisoba : Karaage : Pancake"},
+            {"Onigiri", "Steak", "Matcha Roll", "Onigiri : Steak : Matcha"}
     };
     private static String[] randomSlideMenu = new String[4];
     public void randomBentoSet(){
@@ -25,9 +30,7 @@ public class RunnableOfCooking implements Runnable {
                 && randomSlideMenu[1].equals(targetFrame.sideFood.getName())
                 && randomSlideMenu[2].equals(targetFrame.dessertFood.getName())
            ){
-            resetBentoSet();
-            randomBentoSet();
-            score++;
+            resetBentoSet(); randomBentoSet(); score++;
             System.out.println("YES");
         }
     }
@@ -38,6 +41,8 @@ public class RunnableOfCooking implements Runnable {
     }
     public RunnableOfCooking(MiniGameCooking targetFrame, ActionHandlerOfCooking targetActionHandler) {
         this(0, targetFrame, targetActionHandler);
+        bentoChecking = true;
+        score = 0;
     }
     public RunnableOfCooking(int countdown, MiniGameCooking targetFrame, ActionHandlerOfCooking targetActionHandler) {
         this.countdown = countdown;
@@ -49,12 +54,14 @@ public class RunnableOfCooking implements Runnable {
         if (Thread.currentThread().getName().equals("gameChecking")) {
             randomBentoSet();
             try {
-                while (true) {
+                while (bentoChecking) {
                     checkingBentoSet();
                     Thread.sleep(500);
                 }
             } catch (InterruptedException e) {}
         }
+
+
         if (Thread.currentThread().getName().equals("gameStart")) {
             new Thread(new RunnableOfCooking(targetFrame, targetActionHandler), "gameChecking").start();
             try {
@@ -63,15 +70,26 @@ public class RunnableOfCooking implements Runnable {
                     countdown--;
                     Thread.sleep(1000); // wait for 1 second
                 }
-                //time out
-                //ScoreChecking == false;
-                //bentoChecking Interrupt
-                //showScoreBoard formular by score
+                bentoChecking = false;
+                targetActionHandler.endGameTimer(score);
             } catch (InterruptedException e) {}
         }
 
+        if (Thread.currentThread().getName().equals("prepareCountDown")) {
+            try {
+                while (countdown > 0) {
+                    System.out.println("Game Start in "+countdown);
+                    //targetFrame.typingCountdown.setText( Integer.toString(countdown));
+                    countdown--;
+
+                    Thread.sleep(1000); // wait for 1 second
+                }
+                targetActionHandler.startGameTimer();
+
+            } catch (InterruptedException e) {}
+        }
         if (Thread.currentThread().getName().equals("tutorialTransition")) {
-            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new introAnimate()),  Integer.valueOf(11));
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeInOut()),  Integer.valueOf(11));
             try {
                 while (countdown > 0) {
                     if (countdown == 1){
@@ -83,32 +101,23 @@ public class RunnableOfCooking implements Runnable {
                 targetActionHandler.prepareTimer();
             } catch (InterruptedException e) {}
         }
-
-        if (Thread.currentThread().getName().equals("prepareCountDown")) {
+        else if (Thread.currentThread().getName().equals("stageTransition")) {
             try {
                 while (countdown > 0) {
-                    System.out.println("Game Start in "+countdown);
-//                    targetFrame.typingCountdown.setText( Integer.toString(countdown));
                     countdown--;
-
-                    Thread.sleep(1000); // wait for 1 second
+                    Thread.sleep(1000);
                 }
-                targetActionHandler.startGameTimer();
-
-            } catch (InterruptedException e) {}
+                targetActionHandler.backToStage();
+            } catch (InterruptedException ignored) {}
         }
-//        else if (Thread.currentThread().getName().equals("intro")) {
-//            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new IntroFadeInAnimate(targetFrame, targetFrame.intro)), Integer.valueOf(20));
-//            try {
-//                while (countdown > 0) {
-//                    countdown--;
-//                    Thread.sleep(1000);
-//                }
-////                targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new IntroFadeOutAnimate()), Integer.valueOf(20));
-//                targetFrame.intro.setVisible(false);
-//                randomBentoSet();
-////                new Thread(new RunnableOfCooking(3, targetFrame, targetActionHandler), "gameStart").start();
-//            } catch (InterruptedException ignored) {}
-//        }
+        else if (Thread.currentThread().getName().equals("retryTransition")) {
+            try {
+                while (countdown > 0) {
+                    countdown--;
+                    Thread.sleep(1000);
+                }
+                targetActionHandler.retryNewGame();
+            } catch (InterruptedException ignored) {}
+        }
     }
 }

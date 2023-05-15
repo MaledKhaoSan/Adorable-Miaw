@@ -1,48 +1,57 @@
-import canvas_modify.FadeInAnimate;
-import canvas_modify.FadeOutAnimate;
+import canvas_modify.SceneFadeIn;
 import canvas_modify.SceneModify;
-import canvas_modify.introAnimate;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 
 public class ActionHandlerOfTyping implements ActionListener, KeyListener, MouseListener {
-    private int wordsLength, correctWords, incorrectWords, waiter =1, prepareTime =3, gameTime = 60, tutorialsTime = 2;
-    private MiniGameTyping targetFrame;
-    private String targetActionID;
-    private JLabel targetLabel;
+    private static int correctWords;
+    private static int incorrectWords;
+    private int earnPoints;
+    private int prepareTime =3;
+    private int gameTime;
+    private int gameBonus;
+    private ImageIcon gameStarPath;
+    private final MiniGameTyping targetFrame;
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
     }
 
     public void prepareTimer() {
         new Thread(new RunnableOfTyping(prepareTime , targetFrame, this), "prepareCountDown").start();
-
     }
     public void startGameTimer() {
         targetFrame.requestFocusInWindow();
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
+        if (targetFrame.difficulty.equals("starter") | targetFrame.difficulty.equals("normal")) {
+            this.gameTime = 180;
+            this.gameBonus = 5;
+        } else if (targetFrame.difficulty.equals("hard")) {
+            this.gameTime = 120;
+            this.gameBonus = 8;
+        }
         new Thread(new RunnableOfTyping(gameTime , targetFrame, this), targetFrame.difficulty).start();
     }
     public void endGameTimer(int wordsLength) {
-        this.wordsLength = wordsLength;
         if (correctWords >= wordsLength/100 * 50){
-            System.out.println("3 start, 15 point");
+            earnPoints = gameBonus * 3; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar3.png");
         } else if (correctWords >= wordsLength/100 * 40) {
-            System.out.println("2 start, 10 point");
+            earnPoints = gameBonus * 2; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar2.png");
         } else {
-            System.out.println("1 start, 5 point");
+            earnPoints = gameBonus; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar1.png");
         }
-        System.out.println(correctWords +" "+ incorrectWords);
-
+        targetFrame.ScoreBoardStar.setIcon(gameStarPath);
+        targetFrame.ScoreBoard_CorrectWords.setText(targetFrame.ScoreBoard_CorrectWords.getText() + correctWords);
+        targetFrame.ScoreBoard_IncorrectWords.setText(targetFrame.ScoreBoard_IncorrectWords.getText() + incorrectWords);
+        targetFrame.ScoreBoard_EarnPoints.setText(targetFrame.ScoreBoard_EarnPoints.getText() + earnPoints);
+        System.out.println("CorrectWords:  " + "" + correctWords + " InCorrectWords: " + incorrectWords + " EarnPoints: " + earnPoints);
         targetFrame.ScoreBoardBG.setVisible(true);
     }
-    public void stageScene(){
-        new MainStage();
-        targetFrame.setVisible(false);
-    }
+    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
+    public void retryNewGame(){ new MiniGameTyping(targetFrame.difficulty); targetFrame.setVisible(false); }
+
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -52,7 +61,6 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Pressed");
         if (targetFrame.isCurrentWordRunning()) {
             char typedChar = e.getKeyChar();
             if (typedChar == targetFrame.getCurrentWord().charAt(targetFrame.getCurrentWordStart())) {
@@ -75,18 +83,22 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
             if (targetFrame.tutorial1.isVisible()) {
                 targetFrame.tutorial1.setVisible(false);
             } else if (targetFrame.tutorial2.isVisible()) {
-                targetFrame.tutorial2.setVisible(false);
-            } else if (targetFrame.tutorial3.isVisible()) {
+                targetFrame.intro.removeMouseListener(this);
+                targetFrame.intro.removeKeyListener(this);
+                int tutorialsTime = 2;
                 new Thread(new RunnableOfTyping(tutorialsTime, targetFrame, this), "tutorialTransition").start();
             }
         }
     }@Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == targetFrame.ScoreBoardButton1) {
-            System.out.println("Clicked");
+            targetFrame.ScoreBoardButton1.removeActionListener(this);
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
+            new Thread(new RunnableOfTyping(prepareTime, targetFrame, this), "retryTransition").start();
         }
         else if (e.getSource() == targetFrame.ScoreBoardButton2) {
-            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeInAnimate()), Integer.valueOf(30));
+            targetFrame.ScoreBoardButton2.removeActionListener(this);
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
             new Thread(new RunnableOfTyping(prepareTime, targetFrame, this), "stageTransition").start();
         }
     }
@@ -102,31 +114,4 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
-
-//        targetFrame.layer.add( CatType.catCreate(new CatWalking()) {{
-//            setBounds(0, 0, 1280, 720);
-//        }},  Integer.valueOf(11));
-
-//        targetFrame.layer.add(new CatWalking(){{
-//            setBounds(0, 0, 1280, 720);
-//        }},  Integer.valueOf(11));
-//    public ActionHandlerOfTyping(int minigameTimmer) {
-//        this.minigameTimmer = minigameTimmer;
-//    }
-//    @Override
-//    public void run() {
-//        if (Thread.currentThread().getName().equals("Thread1")) {
-//            try {
-//                while (minigameTimmer > 0) {
-//                    System.out.println(minigameTimmer + " seconds remaining.");
-//                    minigameTimmer--;
-//                    Thread.sleep(1000); // wait for 1 second
-//                }
-//                System.out.println("Time's up!");
-//            } catch (InterruptedException e) {
-//                System.out.println("Thread interrupted.");
-//            }
-//        }
-//    }
-
 }

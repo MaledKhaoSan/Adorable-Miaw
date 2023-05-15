@@ -1,17 +1,19 @@
-import canvas_modify.FadeOutAnimate;
+import canvas_modify.SceneFadeOut;
 import canvas_modify.SceneModify;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.Random;
 
 public class MiniGameTyping extends JFrame{
     public String difficulty;
     public JLabel wordLabel;
 //    private String[] words = {"apple", "banana", "cherry", "durian", "elderberry", "fig", "grape"};
-    private String[] words = {"alice was a fast typist she could type at lightning speed without even looking at the keyboard her fingers danced across the keys tapping out words as fast as her mind could think them one day alice decided to enter a typing competition she knew she had what it took to win and she was determined to come out on top"};
-
+    private String[] words = {
+        "alice was a fast typist she could type at lightning speed without even looking at the keyboard her fingers danced across the keys tapping out words as fast as her mind could think them one day alice decided to enter a typing competition she knew she had what it took to win and she was determined to come out on top",
+        "sally loves to play the piano and sing along the sound of the keys resonates through the room filling it with melodic beauty her fingers gracefully dance across the ivory effortlessly bringing life to each note as she plays her passion shines through captivating anyone who listens the music take her",
+        "the sun shines brightly spreading warmth across the calm meadow the gentle wind carries the sweet scent of flowers enhancing the peaceful atmosphere birds sing joyfully as butterflies flutter among the swaying grass nature beauty and harmony create a tranquil haven inspiring a sense of calm and wonder in those who witness it"
+};
 
 
     private boolean currentWordRunning;
@@ -23,15 +25,16 @@ public class MiniGameTyping extends JFrame{
 
 
     public JLayeredPane layer, intro;
-    public JLabel tutorial1, tutorial2, tutorial3;
+    public JLabel tutorial1, tutorial2;
     public JLabel typingCountdown;
-    public JLabel ScoreBoardBG;
+    public JLabel ScoreBoardBG, ScoreBoardStar, ScoreBoard_CorrectWords,ScoreBoard_IncorrectWords, ScoreBoard_EarnPoints;
     public JButton ScoreBoardButton1, ScoreBoardButton2;
 
-    Font font;
 
     public MiniGameTyping(String difficulty) {
+        ActionHandlerOfTyping handler = new ActionHandlerOfTyping(this);
         this.setBackground(Color.BLACK);
+        this.addKeyListener(new ActionHandlerOfTyping(this));
         this.difficulty = difficulty;
         layer = new JLayeredPane() {
             @Override
@@ -45,8 +48,6 @@ public class MiniGameTyping extends JFrame{
 
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     ge.registerFont(font);
-
-
                 } catch (Exception e) { e.printStackTrace(); }
             }
         };
@@ -54,9 +55,9 @@ public class MiniGameTyping extends JFrame{
         layer.add(intro =  new SceneModify().addJLayerPaneBackGround("intro_layer", true), Integer.valueOf(10));
         intro.addMouseListener(new ActionHandlerOfTyping(MiniGameTyping.this));
         intro.addKeyListener(new ActionHandlerOfTyping(MiniGameTyping.this)); intro.setFocusable(true);
-        intro.add(tutorial1 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial1.png"), Integer.valueOf(5));
-        intro.add(tutorial2 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial2.png"), Integer.valueOf(4));
-        intro.add(tutorial3 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/typing_game/tutorial3.png"), Integer.valueOf(3));
+        intro.add(tutorial1 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/ui_transition/typing_htp.png"), Integer.valueOf(5));
+        intro.add(tutorial2 = new SceneModify().createJLabelWithKey(431, 151, 417, 417, null, "src/resource/ui_transition/timeups_htp.png"), Integer.valueOf(4));
+
 
 
         wordLabel = new JLabel();
@@ -65,97 +66,38 @@ public class MiniGameTyping extends JFrame{
         wordLabel.setVerticalAlignment(JLabel.CENTER);
         layer.add(wordLabel);
 
-        layer.add(typingCountdown = new JLabel(""){{
-            setBounds(1280/2 - 100,70, 200, 105);
-            setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + getText() + "<html>");
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }});
 
+        layer.add(typingCountdown = new SceneModify().createJLabelWithFont(525, 70, 200 ,105, 255, 40,"src/resource/fonts/RemboyRegular.ttf", "" , true));
+        layer.add(ScoreBoardBG = new SceneModify().createJLabel(399, 65, 480, 530, null, "src/resource/ui_transition/ScoreBoardBG.png",false),  Integer.valueOf(10));
+        ScoreBoardBG.add(ScoreBoardStar = new SceneModify().createJLabel(91,50,300,100, null, "", true),  Integer.valueOf(1));
 
+        ScoreBoardBG.add(ScoreBoard_CorrectWords = new SceneModify().createJLabelWithFont(108,190,265,50, 255, 20, "src/resource/fonts/RemboyRegular.ttf", "Correct Words : " , true),  Integer.valueOf(1));
+        ScoreBoardBG.add(ScoreBoard_IncorrectWords = new SceneModify().createJLabelWithFont(108,260,265,50, 255, 20, "src/resource/fonts/RemboyRegular.ttf", "Incorrect Words: " , true),  Integer.valueOf(1));
+        ScoreBoardBG.add(ScoreBoard_EarnPoints = new SceneModify().createJLabelWithFont(108,330,265,50, 255, 20, "src/resource/fonts/RemboyRegular.ttf", "Heart Collection: " , true),  Integer.valueOf(1));
 
-        layer.add(ScoreBoardBG = new JLabel(new ImageIcon("src/resource/typing_game/ScoreBoardBG.png")) {{
-            //addMouseListener(new ActionHandlerOfTyping("ScoreBoardBG",  MiniGameTyping.this, ScoreBoardBG));
-            setBounds(399, 65, 480, 530);
-            setVisible(false);
-            add(ScoreBoardButton1 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBoardButton1.png")) {{
-                setBounds((480/2) - (145/2) - 120, 530-70, 145, 45);
-                addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
-            }},  Integer.valueOf(2));
-            add(ScoreBoardButton2 = new JButton(new ImageIcon("src/resource/typing_game/ScoreBoardButton1.png")) {{
-                setBounds((480/2)- (145/2) + 120, 530-70, 145, 45);
-                addActionListener(new ActionHandlerOfTyping(MiniGameTyping.this));
-            }},  Integer.valueOf(2));
-        }},  Integer.valueOf(10));
+        ScoreBoardBG.add(ScoreBoardButton1 = new SceneModify().createJButton((480/2) - (145/2) - 120, 530-70, 145, 45, handler, "src/resource/ui_transition/UIRetry.png", true),  Integer.valueOf(2));
+        ScoreBoardBG.add(ScoreBoardButton2 = new SceneModify().createJButton((480/2)- (145/2) + 120, 530-70, 145, 45, handler, "src/resource/ui_transition/UINext.png", true),  Integer.valueOf(2));
+
 
 
         add(layer);
         this.setSize(1280, 747);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.layer.add(new SceneModify().addJLayerPaneAnimate(new FadeOutAnimate()),  Integer.valueOf(10));
+        this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
-        this.addKeyListener(new ActionHandlerOfTyping(this));
-//        EntityAnimation animation = new EntityAnimation();
-//        this.add(animation);
-
-
-
-//        generateNewWord(); // start the game with the first word
-//        currentWordRunning = true;
-
-
-//        Thread newThread = new Thread(() -> {
-//            System.out.println("New thread started!");
-//        });
-//        newThread.start();
-
-
-//        Thread scoreThread = new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println("Score: " + score);
-//            }
-//        });
-//        scoreThread.start();
-
-        // Create a new Thread to handle the fade in animation
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                float alpha = 0.0f;
-//                while (alpha < 1.0f) {
-//                    // Increase alpha by a small amount
-//                    alpha += 0.01f;
-//
-//                    // Set alpha of ScoreBoardBG and its child components
-//                    ScoreBoardBG.setOpaque(false);
-//                    ScoreBoardBG.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBoardBG.repaint();
-//                    ScoreBoardButton1.setOpaque(false);
-//                    ScoreBoardButton1.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBoardButton1.repaint();
-//                    ScoreBoardButton2.setOpaque(false);
-//                    ScoreBoardButton2.setBackground(new Color(0, 0, 0, alpha));
-//                    ScoreBoardButton2.repaint();
-//
-//                    try {
-//                        // Sleep for a short amount of time to slow down the animation
-//                        Thread.sleep(10);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
     }
     public void generateNewWord() {
+        if (difficulty.equals("starter")) {
+            currentWordIndex = 0;
+        }
+        else if (difficulty.equals("normal")){
+            currentWordIndex = 1;
+        }
+        else if (difficulty.equals("hard")){
+            currentWordIndex = 2;
+        }
         currentWord = words[currentWordIndex];
-        currentWordIndex = (currentWordIndex + 1) % words.length;
         wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + currentWord + "<html>");
     }
     public boolean isCurrentWordRunning() {
@@ -165,22 +107,10 @@ public class MiniGameTyping extends JFrame{
     public void setCurrentWordRunning(boolean currentWordRunning) {
         this.currentWordRunning = currentWordRunning;
     }
-
-    public int getCurrentWordIndex() {
-        return currentWordIndex;
-    }
-
-    public void setCurrentWordIndex(int currentWordIndex) {
-        this.currentWordIndex = currentWordIndex;
-    }
-
     public String getCurrentWord() {
         return currentWord;
     }
 
-    public void setCurrentWord(String currentWord) {
-        this.currentWord = currentWord;
-    }
 
     public int getCurrentWordStart() {
         return currentWordStart;

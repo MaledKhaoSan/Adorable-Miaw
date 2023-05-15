@@ -95,18 +95,32 @@ public class SceneModify extends JLayeredPane implements Runnable{
     }
 
 
-    public JButton createJButton(int x, int y, int width, int height, ActionListener handler, String path) {
+    public JButton createJButton(int x, int y, int width, int height, ActionListener handler, String path, boolean visible) {
         JButton jButton = new JButton(new ImageIcon(path));
         jButton.setBounds(x, y, width, height);
         jButton.setBorder(null);
         jButton.addActionListener(handler); // use the actionHandler parameter directly
+        jButton.setVisible(visible);
         return jButton;
     }
-    public JLabel createJLabelWithMouse(int x, int y, int width, int height, MouseListener handler, String path) {
+
+    public JLabel createJLabel(int x, int y, int width, int height, MouseListener handler, String path, boolean visible) {
         JLabel jLabel = new JLabel(new ImageIcon(path));
         jLabel.setBounds(x, y, width, height);
         jLabel.addMouseListener(handler);
+        jLabel.setVisible(visible);
         return jLabel;
+    }
+
+    public JLabel createJLabelWithMouse(int x, int y, int width, int height, MouseListener handler, String path, boolean visible) {
+        JLabel jLabel = new JLabel(new ImageIcon(path));
+        jLabel.setBounds(x, y, width, height);
+        jLabel.addMouseListener(handler);
+        jLabel.setVisible(visible);
+        return jLabel;
+    }
+    public JLabel createJLabelWithMouse(int x, int y, int width, int height, MouseListener handler, String path) {
+        return createJLabelWithMouse(x,y,width,height,handler,path, true);
     }
 
     public JLabel createJLabelWithKey(int x, int y, int width, int height, KeyListener handler, String path) {
@@ -116,56 +130,22 @@ public class SceneModify extends JLayeredPane implements Runnable{
         return jLabel;
     }
 
-    public JLabel createJLabelWithFont(int x, int y, int width, int height, String words) {
-        JLabel jLabel = null;
+    public JLabel createJLabelWithFont(int x, int y, int width, int height, int fontOpacity, int fontSize, String fontPath, String words, boolean visible) {
+        JLabel jLabel = this.createJLabel(x,y,width,height, null, "", visible);
         try {
             //---- Load the font from a file
             //File fontPath = new File("src/resource/fonts/Sabreen Regular Demo 400.ttf");
             //Font font = Font.createFont(Font.TRUETYPE_FONT, fontPath);
             //Font fontsize = font.deriveFont(30f);
             //---- Set size & style
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/resource/fonts/gifted-personal.regular.otf")).deriveFont(Font.PLAIN,40f);
-            jLabel = new JLabel(words);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(Font.PLAIN,fontSize);
+            jLabel.setText(words);
             jLabel.setFont(font);
-            jLabel.setForeground(new Color(0, 0, 0, 111));
-            jLabel.setBounds(x, y, width, height);
+            jLabel.setForeground(new Color(0, 0, 0, fontOpacity));
             jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-        return jLabel;
-    }
-
-    public JLabel createJLabelWithHint(int x, int y, int width, int height) {
-        JLabel jLabel = null;
-        try {
-            //---- Load the font from a file
-            //File fontPath = new File("src/resource/fonts/Sabreen Regular Demo 400.ttf");
-            //Font font = Font.createFont(Font.TRUETYPE_FONT, fontPath);
-            //Font fontsize = font.deriveFont(30f);
-            //---- Set size & style
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/resource/fonts/Nightydemo.otf")).deriveFont(Font.PLAIN,40f);
-            jLabel = new JLabel();
-            jLabel.setFont(font);
-            jLabel.setForeground(new Color(0, 0, 0, 176));
-            jLabel.setBounds(x, y, width, height);
-            jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-        }
-        return jLabel;
-    }
-
-    public JLabel newJLabel(int x, int y, int width, int height,int r,int g,int b,int a,boolean opaque, MouseListener handler) {
-        JLabel jLabel = new JLabel();
-        jLabel.setBounds(x, y, width, height);
-        jLabel.setBackground(new Color(r, g, b, a));
-        jLabel.setOpaque(opaque);
-        jLabel.addMouseListener(handler);
         return jLabel;
     }
 }

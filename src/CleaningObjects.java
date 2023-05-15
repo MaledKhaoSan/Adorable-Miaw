@@ -69,10 +69,7 @@ public class CleaningObjects extends CleaningObjectsModify implements  MouseList
     public void rotatable(){
         if (running){
             if (rotationSwitch & rotatable){
-//                if (rotatable){
-//                    rotationStart += 1.8;
-                    rotationStart += 20;
-//                }
+                rotationStart += 2.4;
             }
         }
     }

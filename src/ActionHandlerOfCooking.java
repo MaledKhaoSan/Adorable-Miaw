@@ -1,5 +1,5 @@
-import canvas_modify.IntroFadeInAnimate;
-import canvas_modify.*;
+import canvas_modify.SceneFadeIn;
+import canvas_modify.SceneModify;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -9,10 +9,11 @@ import java.awt.event.KeyListener;
 
 public class ActionHandlerOfCooking implements ActionListener, KeyListener, MouseListener{
     private final MiniGameCooking targetFrame;
-    private int prepareTime = 3, tutorialsTime = 2, gameTime = 60;
+    private int prepareTime = 3, tutorialsTime = 2, gameTime = 61, earnPoints;
     private static int currentIndex = 0;
     private static JLabel currentMenu;
     private static String[][] defaultSlideMenu = { {null,null,null},{null,null,null},{null,null,null} };
+    private ImageIcon gameStarPath;
     public String[][] mainSlideMenu = {
             //mainIcon1
             {"Spam Musubi", "src/resource/cooking_game/mainIcon1.png", "src/resource/cooking_game/main1.png"},
@@ -37,18 +38,45 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
             //dessertIcon3
             {"Strawberry cake", "src/resource/cooking_game/dessertIcon3.png", "src/resource/cooking_game/dessert3.png"}
     };
+
+    private Account account;
+    private AccountSaved accountSaved = new AccountSaved();
     public ActionHandlerOfCooking(MiniGameCooking targetFrame) {
         this.targetFrame = targetFrame;
+        account = accountSaved.load();
     }
-
-
     public void prepareTimer() {
         new Thread(new RunnableOfCooking(prepareTime , targetFrame, this), "prepareCountDown").start();
-
     }
     public void startGameTimer() {
         new Thread(new RunnableOfCooking(gameTime, targetFrame, this), "gameStart").start();
     }
+    public void endGameTimer(int finishedBento) {
+        if (finishedBento >= 10){
+            earnPoints =  finishedBento * 3; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar3.png");
+        } else if (finishedBento >= 5) {
+            earnPoints =  finishedBento * 2; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar2.png");
+        } else {
+            earnPoints =  finishedBento; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar1.png");
+        }
+        targetFrame.ScoreBoardStar.setIcon(gameStarPath);
+        targetFrame.ScoreBoard_FinishedBento.setText(targetFrame.ScoreBoard_FinishedBento.getText() + finishedBento);
+        targetFrame.ScoreBoard_EarnPoints.setText(targetFrame.ScoreBoard_EarnPoints.getText() + earnPoints);
+        System.out.println("Bento:  " + "" + finishedBento);
+        targetFrame.ScoreBoardBG.setVisible(true);
+
+        //Disable Area
+        targetFrame.BentoHint.setVisible(false);
+        targetFrame.BentoHintBox.setVisible(false);
+        targetFrame.selectedFrame.setVisible(false);
+        targetFrame.bentoArrow.setVisible(false);
+        targetFrame.BentoHitBox1.setVisible(false);
+        targetFrame.BentoHitBox2.setVisible(false);
+        targetFrame.BentoHitBox3.setVisible(false);
+    }
+
+    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
+    public void retryNewGame(){ new MiniGameCooking(); targetFrame.setVisible(false); }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,6 +105,17 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
         else if (e.getSource() == targetFrame.BentoHitBox3){
             updateSlideMenu(dessertSlideMenu, targetFrame.dessertFood, 460, 335);
         }
+
+        else if (e.getSource() == targetFrame.ScoreBoardButton1) {
+            targetFrame.ScoreBoardButton1.removeActionListener(this);
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
+            new Thread(new RunnableOfCooking(prepareTime, targetFrame, this), "retryTransition").start();
+        }
+        else if (e.getSource() == targetFrame.ScoreBoardButton2) {
+            targetFrame.ScoreBoardButton2.removeActionListener(this);
+            targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
+            new Thread(new RunnableOfCooking(prepareTime, targetFrame, this), "stageTransition").start();
+        }
     }
     public void updateSlideMenu(String[][] targetSlide, JLabel targetMenu, int arrowX, int arrowY){
         int numRows = 3;
@@ -97,14 +136,9 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
             if (targetFrame.tutorial1.isVisible()) {
                 targetFrame.tutorial1.setVisible(false);
             } else if (targetFrame.tutorial2.isVisible()) {
-                targetFrame.tutorial2.setVisible(false);
-            } else if (targetFrame.tutorial3.isVisible()) {
+                targetFrame.intro.removeMouseListener(this);
+                targetFrame.intro.removeKeyListener(this);
                 new Thread(new RunnableOfCooking(tutorialsTime, targetFrame, this), "tutorialTransition").start();
-//                targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new introAnimate()), Integer.valueOf(20));
-////                new Thread(new RunnableOfCooking(waiter, targetFrame, this), "intro").start();
-//
-//                targetFrame.intro.setVisible(false);
-//                new Thread(new RunnableOfCooking(3, targetFrame, ActionHandlerOfCooking.this), "gameStart").start();
             }
         }
     }

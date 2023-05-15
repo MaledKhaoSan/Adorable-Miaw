@@ -1,34 +1,15 @@
 
 import javax.swing.*;
-//import com.example.MainStage;
 import java.awt.event.*;
 
 
 public class ActionHandlerOfStage implements ActionListener, MouseListener, MouseMotionListener {
     private MainStage targetFrame;
-    private JLabel targetLabel;
-    private JButton targetButton;
+    private AccountSaved accountSaved = new AccountSaved();
 
     public ActionHandlerOfStage(MainStage targetFrame) {
         this.targetFrame = targetFrame;
     }
-    public ActionHandlerOfStage(MainStage targetFrame, JLabel targetLabel) {
-        this.targetFrame = targetFrame;
-        this.targetLabel = targetLabel;
-    }
-    public ActionHandlerOfStage(MainStage targetFrame, JButton targetButton) {
-        this.targetFrame = targetFrame;
-        this.targetButton = targetButton;
-    }
-
-//    public ActionHandlerOfStage(String targetActionID, String targetRequestID, MainStage targetFrame, JLabel targetLabel) {
-//        this.targetActionID = targetActionID;
-//        this.targetRequestID = targetRequestID;
-//        this.targetFrame = targetFrame;
-//        this.targetLabel = targetLabel;
-//    }
-
-
 
     public void mouseDragged(MouseEvent e) {}
 
@@ -98,7 +79,7 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameTypingUI.setVisible(false);
             targetFrame.minigameTypingEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingEnter.png"));
         } else if (e.getSource() == targetFrame.minigameTypingUIButton2) {
-            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingDifficultyUI.png"));
+            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameDifficultyUI.png"));
             targetFrame.minigameTypingUIButton1.setVisible(false);
             targetFrame.minigameTypingUIButton2.setVisible(false);
             targetFrame.minigameTypingUIButton3.setVisible(true);
@@ -108,7 +89,7 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
 
 
         } else if (e.getSource() == targetFrame.minigameTypingUIButton3){
-            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingTutorial.png"));
+            targetFrame.minigameTypingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameTypingUI.png"));
             targetFrame.minigameTypingUIButton1.setVisible(true);
             targetFrame.minigameTypingUIButton2.setVisible(true);
             targetFrame.minigameTypingUIButton3.setVisible(false);
@@ -117,12 +98,15 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameTypingDifficulty3.setVisible(false);
 
         }else if (e.getSource() == targetFrame.minigameTypingDifficulty1){
+            targetFrame.minigameTypingDifficulty1.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "starter"), "MiniGameTypingEnter").start();
 
         }else if (e.getSource() == targetFrame.minigameTypingDifficulty2){
+            targetFrame.minigameTypingDifficulty2.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "normal"), "MiniGameTypingEnter").start();
 
         }else if (e.getSource() == targetFrame.minigameTypingDifficulty3){
+            targetFrame.minigameTypingDifficulty3.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "hard"), "MiniGameTypingEnter").start();
 
 
@@ -135,27 +119,34 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameCleaningEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningEnter.png"));
 
         } else if (e.getSource() == targetFrame.minigameCleaningUIButton2) {
-            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningUI.png"));
+            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameDifficultyUI.png"));
             targetFrame.minigameCleaningUIButton1.setVisible(false);
             targetFrame.minigameCleaningUIButton2.setVisible(false);
             targetFrame.minigameCleaningUIButton3.setVisible(true);
-
+            targetFrame.minigameCleaningStart.setVisible(true);
+            targetFrame.minigameCleaningCountDown.setVisible(true);
         } else if (e.getSource() == targetFrame.minigameCleaningUIButton3) {
-            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningTutorial.png"));
+
+            targetFrame.minigameCleaningUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCleaningUI.png"));
             targetFrame.minigameCleaningUIButton1.setVisible(true);
             targetFrame.minigameCleaningUIButton2.setVisible(true);
             targetFrame.minigameCleaningUIButton3.setVisible(false);
+            targetFrame.minigameCleaningStart.setVisible(false);
+            targetFrame.minigameCleaningCountDown.setVisible(false);
 //          new MiniGameCleaning();
 //          targetFrame.setVisible(false);
+        } else if (e.getSource() == targetFrame.minigameCleaningStart) {
+            if (accountSaved.load().getCooldown() <= 0){
+                new Thread(new RunnableOfMainStage(1, targetFrame), "MiniGameCleaningEnter").start();
+            }
 
-
-        //Cooking Enter UX
+            //Cooking Enter UX
         } else if (e.getSource() == targetFrame.minigameCookingUIButton1) {
             targetFrame.setMinigameIsSelect(false);
             targetFrame.minigameCookingUI.setVisible(false);
             targetFrame.minigameCookingEnter.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingEnter.png"));
         } else if (e.getSource() == targetFrame.minigameCookingUIButton2) {
-            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingDifficultyUI.png"));
+            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameDifficultyUI.png"));
             targetFrame.minigameCookingUIButton1.setVisible(false);
             targetFrame.minigameCookingUIButton2.setVisible(false);
             targetFrame.minigameCookingUIButton3.setVisible(true);
@@ -164,7 +155,7 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameCookingDifficulty3.setVisible(true);
 
         } else if (e.getSource() == targetFrame.minigameCookingUIButton3){
-            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingTutorial.png"));
+            targetFrame.minigameCookingUI.setIcon(new ImageIcon("src/resource/stage_canvas/minigameCookingUI.png"));
             targetFrame.minigameCookingUIButton1.setVisible(true);
             targetFrame.minigameCookingUIButton2.setVisible(true);
             targetFrame.minigameCookingUIButton3.setVisible(false);
@@ -173,18 +164,20 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameCookingDifficulty3.setVisible(false);
 
         }else if (e.getSource() == targetFrame.minigameCookingDifficulty1){
+            targetFrame.minigameCookingDifficulty1.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "starter"), "MiniGameCookingEnter").start();
 
         }else if (e.getSource() == targetFrame.minigameCookingDifficulty2){
+            targetFrame.minigameCookingDifficulty2.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "normal"), "MiniGameCookingEnter").start();
 
         }else if (e.getSource() == targetFrame.minigameCookingDifficulty3) {
+            targetFrame.minigameCookingDifficulty3.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame, "hard"), "MiniGameCookingEnter").start();
         }
 
-
-
         else if (e.getSource() == targetFrame.homeEnter) {
+            targetFrame.homeEnter.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame), "MainBuildingEnter").start();
         }
     }
