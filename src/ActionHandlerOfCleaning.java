@@ -3,7 +3,7 @@ import canvas_modify.SceneModify;
 import java.awt.event.*;
 
 
-public class ActionHandlerOfCleaning implements ActionListener, KeyListener, MouseListener {
+public class ActionHandlerOfCleaning implements ActionListener, KeyListener, MouseListener, WindowListener{
     private MiniGameCleaning targetFrame;
     private final static int tutorialsTime = 1;
     private Account account;
@@ -13,7 +13,7 @@ public class ActionHandlerOfCleaning implements ActionListener, KeyListener, Mou
 
     public ActionHandlerOfCleaning(MiniGameCleaning targetFrame) { this.targetFrame = targetFrame;}
     public void startGameTimer() { targetFrame.requestFocusInWindow();new CleaningMissionCreate(targetFrame, targetFrame.Challenge1, "");}
-    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
+    public void backToStage(){ new MainStage(); targetFrame.dispose(); }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -61,4 +61,39 @@ public class ActionHandlerOfCleaning implements ActionListener, KeyListener, Mou
     public void mouseExited(MouseEvent e) {}
     @Override
     public void keyReleased(KeyEvent e) {}
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window is closing save");}
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        targetFrame.soundPlayer.stopAudio();
+        System.out.println("Window is closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

@@ -1,5 +1,7 @@
 import canvas_modify.SceneFadeOut;
 import canvas_modify.SceneModify;
+import canvas_modify.SceneSoundBackground;
+import canvas_modify.SceneSoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +21,10 @@ public class MiniGameCooking extends JFrame {
     public Thread thread;
     private Account account;
     private AccountSaved accountSaved = new AccountSaved();
+    public SceneSoundPlayer soundPlayer = new SceneSoundBackground();
 
     public MiniGameCooking() {
+        soundPlayer.getSoundPath(4);
         account = accountSaved.load();
         this.setBackground(Color.BLACK);
         ActionHandlerOfCooking handler = new ActionHandlerOfCooking(this);
@@ -72,6 +76,7 @@ public class MiniGameCooking extends JFrame {
         this.setResizable(false);
         this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
+        this.addWindowListener(handler);
     }
 
     public void bentoColorCheck(){

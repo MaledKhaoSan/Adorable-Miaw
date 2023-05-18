@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 
-public class ActionHandlerOfStage implements ActionListener, MouseListener, MouseMotionListener {
+public class ActionHandlerOfStage implements ActionListener, MouseListener, MouseMotionListener, WindowListener {
     private MainStage targetFrame;
     private AccountSaved accountSaved = new AccountSaved();
 
@@ -133,8 +133,6 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.minigameCleaningUIButton3.setVisible(false);
             targetFrame.minigameCleaningStart.setVisible(false);
             targetFrame.minigameCleaningCountDown.setVisible(false);
-//          new MiniGameCleaning();
-//          targetFrame.setVisible(false);
         } else if (e.getSource() == targetFrame.minigameCleaningStart) {
             if (accountSaved.load().getCooldown() <= 0){
                 new Thread(new RunnableOfMainStage(1, targetFrame), "MiniGameCleaningEnter").start();
@@ -180,5 +178,42 @@ public class ActionHandlerOfStage implements ActionListener, MouseListener, Mous
             targetFrame.homeEnter.removeActionListener(this);
             new Thread(new RunnableOfMainStage(1, targetFrame), "MainBuildingEnter").start();
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        accountSaved.save();
+        System.out.println("Window is closing save");}
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        accountSaved.save();
+        targetFrame.soundPlayer.stopAudio();
+        System.out.println("Window is closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

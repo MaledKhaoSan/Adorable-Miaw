@@ -15,8 +15,10 @@ public class MainBuilding extends JFrame{
 
     private Account account;
     private AccountSaved accountSaved = new AccountSaved();
+    public SceneSoundPlayer soundPlayer = new SceneSoundBackground();
 
     public MainBuilding() {
+        soundPlayer.getSoundPath(2);
         ActionHandlerOfBuilding handler = new ActionHandlerOfBuilding(this);
         account = accountSaved.load();
         this.setBackground(Color.BLACK);
@@ -53,21 +55,23 @@ public class MainBuilding extends JFrame{
         layer.add(furniture_vase = new SceneModify().createJLabelWithMouse(751, 562,137,158, null, "src/resource/building_canvas/vase.png"), Integer.valueOf(4));
 
 
-        layer.add(ButtonA = new SceneModify().createJButton(100, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-        ButtonA.setOpaque(true);
-        ButtonA.setBackground(Color.black);
+//        layer.add(ButtonA = new SceneModify().createJButton(100, 100, 50, 50, handler, null, true), Integer.valueOf(4));
+//        ButtonA.setOpaque(true);
+//        ButtonA.setBackground(Color.black);
+//
+//        layer.add(ButtonB = new SceneModify().createJButton(200, 100, 50, 50, handler, null, true), Integer.valueOf(4));
+//        ButtonB.setOpaque(true);
+//        ButtonB.setBackground(Color.RED);
+//
+//        layer.add(ButtonC = new SceneModify().createJButton(300, 100, 50, 50, handler, null, true), Integer.valueOf(4));
+//        ButtonC.setOpaque(true);
+//        ButtonC.setBackground(Color.CYAN);
+//
+//        layer.add(ButtonD = new SceneModify().createJButton(400, 100, 50, 50, handler, null, true), Integer.valueOf(4));
+//        ButtonD.setOpaque(true);
+//        ButtonD.setBackground(Color.ORANGE);
 
-        layer.add(ButtonB = new SceneModify().createJButton(200, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-        ButtonB.setOpaque(true);
-        ButtonB.setBackground(Color.RED);
 
-        layer.add(ButtonC = new SceneModify().createJButton(300, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-        ButtonC.setOpaque(true);
-        ButtonC.setBackground(Color.CYAN);
-
-        layer.add(ButtonD = new SceneModify().createJButton(400, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-        ButtonD.setOpaque(true);
-        ButtonD.setBackground(Color.ORANGE);
 
 
         this.setSize(1280, 747);
@@ -77,5 +81,6 @@ public class MainBuilding extends JFrame{
         this.addWindowListener(handler);
         this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
+
     }
 }

@@ -1,12 +1,10 @@
-import canvas_modify.*;
+import canvas_modify.SceneFadeOut;
+import canvas_modify.SceneModify;
+import canvas_modify.SceneSoundBackground;
+import canvas_modify.SceneSoundPlayer;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 
 
@@ -14,8 +12,10 @@ import javax.sound.sampled.Clip;
 public class MainMenu extends JFrame{
     public JLayeredPane layer;
     public JButton menuButton1;
+    public SceneSoundPlayer soundPlayer = new SceneSoundBackground();
 
     public MainMenu() {
+        soundPlayer.getSoundPath(0);
         ActionHandlerOfMenu handler = new ActionHandlerOfMenu(this);
         this.setBackground(Color.black);
         layer = new SceneModify().addJLayerPaneBackGround("src/resource/menu_canvas/background.png", "layer", true);
@@ -34,19 +34,9 @@ public class MainMenu extends JFrame{
         this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
 
-        playBackgroundMusic("src/resource/audio/Attention.wav");
+
     }
 
-    public void playBackgroundMusic(String filePath) {
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            System.out.println("Error playing background music: " + e.getMessage());
-        }
-    }
 }
 
 

@@ -34,7 +34,7 @@ public class RunnableOfBuilding implements Runnable{
                     Thread.sleep(1000);
                 }
                 new MainStage();
-                targetFrame.setVisible(false);
+                targetFrame.dispose();
 
             } catch (InterruptedException ignored) {}
 

@@ -23,11 +23,6 @@ public class ActionHandlerOfMenu implements WindowListener, ActionListener{
     }
 
     public void stageScene(){
-        System.out.println(account.getBalance());
-        account.setBalance(account.getBalance() + 1000);
-        System.out.println(account.getBalance());
-
-
         new MainStage();
         targetFrame.dispose();
     }
@@ -39,6 +34,7 @@ public class ActionHandlerOfMenu implements WindowListener, ActionListener{
     @Override
     public void windowClosed(WindowEvent e) {
         accountSaved.save();
+        targetFrame.soundPlayer.stopAudio();
         System.out.println("Window is closed");}
     @Override
     public void windowOpened(WindowEvent e) {

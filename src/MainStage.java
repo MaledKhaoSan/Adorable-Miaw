@@ -1,5 +1,8 @@
 import canvas_modify.SceneFadeOut;
 import canvas_modify.SceneModify;
+import canvas_modify.SceneSoundBackground;
+import canvas_modify.SceneSoundPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,8 +20,10 @@ public class MainStage extends JFrame{
     public JButton minigameCleaningUIButton1, minigameCleaningUIButton2, minigameCleaningUIButton3, minigameCleaningStart;
     public JLabel minigameCookingUI;
     public JButton minigameCookingUIButton1, minigameCookingUIButton2, minigameCookingUIButton3, minigameCookingDifficulty1, minigameCookingDifficulty2, minigameCookingDifficulty3;
+    public SceneSoundPlayer soundPlayer = new SceneSoundBackground();
 
     public MainStage() {
+        soundPlayer.getSoundPath(1);
         ActionHandlerOfStage handler = new ActionHandlerOfStage(this);
         this.setBackground(Color.BLACK);
 
@@ -59,6 +64,7 @@ public class MainStage extends JFrame{
         this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
         new Thread(new RunnableOfMainStage(this), "MiniGameCleaningCountDown").start();
+        this.addWindowListener(handler);
     }
     public boolean isMinigameIsSelect() {
         return minigameIsSelect;

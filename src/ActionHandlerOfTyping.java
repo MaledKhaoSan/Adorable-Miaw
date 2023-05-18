@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 
-public class ActionHandlerOfTyping implements ActionListener, KeyListener, MouseListener {
+public class ActionHandlerOfTyping implements ActionListener, KeyListener, MouseListener, WindowListener {
     private static int correctWords;
     private static int incorrectWords;
     private int earnPoints;
@@ -49,8 +49,8 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
         System.out.println("CorrectWords:  " + "" + correctWords + " InCorrectWords: " + incorrectWords + " EarnPoints: " + earnPoints);
         targetFrame.ScoreBoardBG.setVisible(true);
     }
-    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
-    public void retryNewGame(){ new MiniGameTyping(targetFrame.difficulty); targetFrame.setVisible(false); }
+    public void backToStage(){ new MainStage(); targetFrame.dispose(); }
+    public void retryNewGame(){ new MiniGameTyping(targetFrame.difficulty); targetFrame.dispose(); }
 
 
     @Override
@@ -70,10 +70,18 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
                     System.out.println("LAST WORD");
                 }
                 correctWords++;
-                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart()) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart()) + "<html>");
+                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
+                + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
+                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
+                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart()) + "<html>");
             }
             else {
-                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>" + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart()) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: red'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart(), targetFrame.getCurrentWordStart() + 1) + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>" + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart() + 1) + "<html>");
+                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
+                + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
+                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: red'>"
+                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart(), targetFrame.getCurrentWordStart() + 1)
+                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
+                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart() + 1) + "<html>");
                 incorrectWords++;
             }
         }
@@ -114,4 +122,39 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window is closing save");}
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        targetFrame.soundPlayer.stopAudio();
+        System.out.println("Window is closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

@@ -34,8 +34,6 @@ public class CleaningObjects extends CleaningObjectsModify implements  MouseList
         obj.rotate(-Math.toRadians(rotationStart));
         obj.translate(-centerX, -centerY);
     }
-
-
     @Override
     public void mouseDragged(MouseEvent e) {}
     @Override
@@ -43,7 +41,6 @@ public class CleaningObjects extends CleaningObjectsModify implements  MouseList
         mouseX = e.getX();
         mouseY = e.getY();
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 & hasSubSpriteSheet){
@@ -87,7 +84,6 @@ public class CleaningObjects extends CleaningObjectsModify implements  MouseList
         }
 
     }
-
 
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}

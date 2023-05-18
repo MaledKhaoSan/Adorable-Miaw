@@ -39,22 +39,22 @@ public class RunnableOfTyping implements Runnable{
             try {
                 while (countdown > 0) {
                     updateCountDown(--countdown);
-                    if (countdown == 115){
+                    if (countdown == 175){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatPlaying());
+                        CatAnimated cat = new CatCreated().CatGetType(2);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(8));
                     }
-                    if (countdown == 110){
+                    if (countdown == 170){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatWalking("src/resource/typing_game/CatSpriteSheet1.png"));
+                        CatAnimated cat = new CatCreated().CatGetType(0);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }
 
-                    if (countdown == 80){
+                    if (countdown == 160){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatWalking("src/resource/typing_game/CatSpriteSheet2.png"));
+                        CatAnimated cat = new CatCreated().CatGetType(1);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }
@@ -71,14 +71,14 @@ public class RunnableOfTyping implements Runnable{
                     updateCountDown(--countdown);
                     if (countdown == 115){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatPlaying());
+                        CatAnimated cat = new CatCreated().CatGetType(2);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(8));
                     }
 
                     if (countdown == 100){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatWalking("src/resource/typing_game/CatSpriteSheet2.png"));
+                        CatAnimated cat = new CatCreated().CatGetType(1);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }
@@ -95,14 +95,14 @@ public class RunnableOfTyping implements Runnable{
                     updateCountDown(--countdown);
                     if (countdown == 115){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatPlaying());
+                        CatAnimated cat = new CatCreated().CatGetType(2);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(8));
                     }
 
                     if (countdown == 110){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatSelected(new CatWalking("src/resource/typing_game/CatSpriteSheet2.png"));
+                        CatAnimated cat = new CatCreated().CatGetType(1);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }

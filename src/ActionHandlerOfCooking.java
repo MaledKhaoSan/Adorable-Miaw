@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
-public class ActionHandlerOfCooking implements ActionListener, KeyListener, MouseListener{
+public class ActionHandlerOfCooking implements ActionListener, KeyListener, MouseListener, WindowListener{
     private final MiniGameCooking targetFrame;
     private int prepareTime = 3, tutorialsTime = 2, gameTime = 61, earnPoints;
     private static int currentIndex = 0;
@@ -75,8 +75,8 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
         targetFrame.BentoHitBox3.setVisible(false);
     }
 
-    public void backToStage(){ new MainStage(); targetFrame.setVisible(false); }
-    public void retryNewGame(){ new MiniGameCooking(); targetFrame.setVisible(false); }
+    public void backToStage(){ new MainStage(); targetFrame.dispose(); }
+    public void retryNewGame(){ new MiniGameCooking(); targetFrame.dispose(); }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -160,4 +160,39 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window is closing save");}
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        targetFrame.soundPlayer.stopAudio();
+        System.out.println("Window is closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

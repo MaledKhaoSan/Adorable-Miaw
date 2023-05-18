@@ -157,7 +157,6 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
         CleaningObjectsModify.setPuzzleScoreCheck(0);
         new Thread(this, "puzzleRunning").start();
     }
-  //tewter <3 khao tanggy <3 punch khao <3 tanggy tewter <3 tanggy punch <3 tewter tewter <3 khao
     @Override
     public void run() {
         if (Thread.currentThread().getName().equals("puzzleRunning")) {

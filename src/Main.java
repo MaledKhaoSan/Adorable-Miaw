@@ -1,14 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-//          new MainMenu();
-//        new MainStage();
-//      new MiniGameTyping("starter");
-//      new MiniGameCleaning();
-//      new MiniGameCooking();
-      new MainBuilding();
-
-        Thread thread = new Thread(new CooldownAftergame());
-        thread.start();
+      new MainMenu();
+    Thread thread = new Thread(new CooldownAftergame());
+    thread.start();
 
     }
 }

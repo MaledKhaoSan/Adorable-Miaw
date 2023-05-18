@@ -7,17 +7,16 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 
 public class SceneModify extends JLayeredPane implements Runnable{
     private int currentFrame = 1;
     private BufferedImage[] frames;
     private JLabel label;
 
-//    public SceneModify() {}
-//    public SceneModify(BufferedImage[] frames, JLabel label) {
-//        this.frames = frames;
-//        this.label = label;
-//    }
 
     public JLayeredPane addJLayerPaneBackGround(String imagePath, String layerName, boolean visible){
         return new JLayeredPane() {
@@ -84,13 +83,6 @@ public class SceneModify extends JLayeredPane implements Runnable{
                 try { Thread.sleep(100); }
                 catch (InterruptedException ex) { ex.printStackTrace();}
             }
-//            for (int i = 0; i < frames.length; i++) {
-//                currentFrame = i;
-//                label.repaint();
-//            }
-//            try {
-//                Thread.sleep(100); // wait for 1 second
-//            } catch (InterruptedException e) {}
         }
     }
 
@@ -147,5 +139,19 @@ public class SceneModify extends JLayeredPane implements Runnable{
             e.printStackTrace();
         }
         return jLabel;
+    }
+
+    protected void playAudio(String filePath) {
+
+
+
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            System.out.println("Error playing audio: " + e.getMessage());
+        }
     }
 }

@@ -3,7 +3,6 @@ public class Furniture {
     private String name;
     private boolean active;
 
-
     public Furniture(String name, boolean active, int price) {
         this.name = name;
         this.active = active;

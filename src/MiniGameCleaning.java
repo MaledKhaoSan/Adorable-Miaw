@@ -4,12 +4,13 @@ import canvas_modify.*;
 
 public class MiniGameCleaning extends JFrame {
     public JLayeredPane layer, Challenge1, Challenge2, Challenge3, Challenge4, Challenge5, intro;
-    public JLabel Button1, Button2, tutorial1, tutorial2;
+    public JLabel tutorial1, tutorial2;
     public JLabel ScoreBoardBG, ScoreBoardStar, ScoreBoard_CompleteText, ScoreBoard_EarnPoints;
     public JButton ScoreBoardButton1;
-    private ImageIcon image1 = new ImageIcon("src/resource/menu_canvas/background.png");
+    public SceneSoundPlayer soundPlayer = new SceneSoundBackground();
 
     public MiniGameCleaning() {
+        soundPlayer.getSoundPath(3);
         ActionHandlerOfCleaning handler = new ActionHandlerOfCleaning(this);
         this.setBackground(Color.BLACK);
         layer = new SceneModify().addJLayerPaneBackGround("src/resource/cleaning_game/background.png", "layer", true);
@@ -41,5 +42,7 @@ public class MiniGameCleaning extends JFrame {
         this.setResizable(false);
         this.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeOut()),  Integer.valueOf(20));
         this.setVisible(true);
+        this.addWindowListener(handler);
+
     }
 }

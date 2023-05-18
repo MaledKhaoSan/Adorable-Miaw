@@ -10,8 +10,6 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
 
 
 
-
-
     private static int currentIndex = 0;
     public static String[][] defaultSlideMenu = {
             //boxIcon1
@@ -52,7 +50,6 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
             targetFrame.bentoBox.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][2]));
             targetFrame.bentoBG.setIcon(new ImageIcon(defaultSlideMenu[currentIndex][3]));
         }
-
         if (e.getSource() == targetFrame.homeExit) {
             targetFrame.homeExit.removeActionListener(this);
             new Thread(new RunnableOfBuilding(1, targetFrame, this), "HomeExit").start();
@@ -184,12 +181,12 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-
-    }
+        System.out.println("Window is closing save");}
 
     @Override
     public void windowClosed(WindowEvent e) {
-
+        targetFrame.soundPlayer.stopAudio();
+        System.out.println("Window is closed");
     }
 
     @Override

@@ -1,13 +1,9 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 public class CatWalking extends CatAnimated {
     private boolean flipSprite = true;
 
     public CatWalking(String spriteSheetPath){
-        this.CreateBufferedFrame(spriteSheetPath, 1280, 720, 1, 6, -800, -15, 100);
-        this.CreateBufferedAnimated();
+        this.CreateBufferedAnimated(spriteSheetPath, 1280, 720, 1, 6, -800, -15, 100);
     }
 
     @Override
@@ -31,7 +27,6 @@ public class CatWalking extends CatAnimated {
     }
     @Override
     public void jump() {}
-
     @Override
     public void update() {
         currentFrame = (currentFrame + 1) % frameCount;

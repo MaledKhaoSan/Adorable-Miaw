@@ -1,5 +1,4 @@
 import canvas_modify.*;
-
 import java.util.Random;
 
 public class RunnableOfCooking implements Runnable {
@@ -17,6 +16,8 @@ public class RunnableOfCooking implements Runnable {
             {"Yakisoba", "Karaage", "Japanese Pancake", "Yakisoba : Karaage : Pancake"},
             {"Onigiri", "Steak", "Matcha Roll", "Onigiri : Steak : Matcha"}
     };
+
+
     private static String[] randomSlideMenu = new String[4];
     public void randomBentoSet(){
         int randomIndex = new Random().nextInt(puzzleSlideMenu.length);
