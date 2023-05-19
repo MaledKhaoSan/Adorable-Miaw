@@ -73,7 +73,7 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
             // Update the current frame of the animation // Update the position of the entity
             update();
             move();
-            jump();
+            playing();
             repaint();
             try {
                 Thread.sleep(100);

@@ -5,9 +5,8 @@ import java.awt.*;
 
 public class CleaningMissionCreate extends JLayeredPane implements Runnable{
     private MiniGameCleaning targetFrame;
-    private JLayeredPane targetLayer, puzzleLayerPane1, puzzleLayerPane2, puzzleLayerPane3;
+    private JLayeredPane targetLayer;
     private CleaningObjects object0, object1, object2, object3, object4, object5, object6, object7, object8, object9;
-    public JLabel scoreBoard;
     private int puzzleScore;
 
     public CleaningMissionCreate(MiniGameCleaning targetFrame, JLayeredPane targetLayer) {
@@ -17,32 +16,32 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
     }
 
     public CleaningMissionCreate(MiniGameCleaning targetFrame, JLayeredPane targetLayer, String targetLayerName) {
-        if (targetLayerName.equals("")){
-            targetFrame.Challenge1.setVisible(true);
-            targetFrame.Challenge2.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge1));
-        }
-        else if (targetLayerName.equals("Challenge1")){
-            targetFrame.Challenge2.setVisible(true);
-            targetLayer.setVisible(false);
-            targetFrame.Challenge2.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge2));
-        }
-        else if (targetLayerName.equals("Challenge2")){
-            targetFrame.Challenge3.setVisible(true);
-            targetLayer.setVisible(false);
-            targetFrame.Challenge3.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge3));
-        }
-        else if (targetLayerName.equals("Challenge3")){
-            targetFrame.Challenge4.setVisible(true);
-            targetLayer.setVisible(false);
-            targetFrame.Challenge4.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge4));
-        }
-        else if (targetLayerName.equals("Challenge4")){
-            targetFrame.Challenge5.setVisible(true);
-            targetLayer.setVisible(false);
-            targetFrame.Challenge5.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge5));
-        }
-        else if (targetLayerName.equals("Challenge5")){
-            targetFrame.ScoreBoardBG.setVisible(true);
+        switch (targetLayerName) {
+            case "" -> {
+                targetFrame.Challenge1.setVisible(true);
+                targetFrame.Challenge2.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge1));
+            }
+            case "Challenge1" -> {
+                targetFrame.Challenge2.setVisible(true);
+                targetLayer.setVisible(false);
+                targetFrame.Challenge2.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge2));
+            }
+            case "Challenge2" -> {
+                targetFrame.Challenge3.setVisible(true);
+                targetLayer.setVisible(false);
+                targetFrame.Challenge3.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge3));
+            }
+            case "Challenge3" -> {
+                targetFrame.Challenge4.setVisible(true);
+                targetLayer.setVisible(false);
+                targetFrame.Challenge4.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge4));
+            }
+            case "Challenge4" -> {
+                targetFrame.Challenge5.setVisible(true);
+                targetLayer.setVisible(false);
+                targetFrame.Challenge5.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge5));
+            }
+            case "Challenge5" -> targetFrame.ScoreBoardBG.setVisible(true);
         }
     }
     public CleaningMissionCreate(JLayeredPane targetLayer) {
@@ -125,7 +124,6 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
                 setBounds(509, 87, 88, 593);
             }}, Integer.valueOf(2));
             CleaningMissionReset(3);
-
             targetLayer.add(object4 = new CleaningObjects("src/resource/cleaning_game/Book4.png", 35, 575, 0) {{
                 setBounds(597, 105, 35, 575);
             }}, Integer.valueOf(2));
@@ -135,21 +133,16 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
             targetLayer.add(object6 = new CleaningObjects("src/resource/cleaning_game/Book6.png", 54, 536, 0) {{
                 setBounds(671, 144, 54, 536);
             }}, Integer.valueOf(2));
-
             targetLayer.add(object7 = new CleaningObjects("src/resource/cleaning_game/Book7_1.png", "src/resource/cleaning_game/Book7.png", 153, 513) {{
                 setBounds(725, 168, 153, 513);
             }}, Integer.valueOf(2));
-
             targetLayer.add(object8 = new CleaningObjects("src/resource/cleaning_game/Book8.png", 65, 463, 0) {{
                 setBounds(878, 217, 65, 463);
             }}, Integer.valueOf(2));
-
             targetLayer.add(object9 = new CleaningObjects("src/resource/cleaning_game/Book9_1.png", "src/resource/cleaning_game/Book9.png", 75, 426) {{
                 setBounds(943, 254, 75, 426);
             }}, Integer.valueOf(2));
             CleaningMissionReset(5);
-
-
         }
     }
     public void CleaningMissionReset(int puzzleScore) {
@@ -171,6 +164,8 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
             Thread.currentThread().interrupt();
             new Thread(this, "puzzleFadeOut").start();
         }
+
+
         else if (Thread.currentThread().getName().equals("puzzleFadeOut")) {
             while (true){
                 try {

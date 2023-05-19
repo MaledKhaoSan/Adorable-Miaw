@@ -51,6 +51,10 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
     public void startGameTimer() {
         new Thread(new RunnableOfCooking(gameTime, targetFrame, this), "gameStart").start();
     }
+
+    public void backToStage(){ new MainStage(); targetFrame.dispose(); }
+    public void retryNewGame(){ new MiniGameCooking(); targetFrame.dispose(); }
+
     public void endGameTimer(int finishedBento) {
         if (finishedBento >= 10){
             earnPoints =  finishedBento * 3; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar3.png");
@@ -59,24 +63,18 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
         } else {
             earnPoints =  finishedBento; gameStarPath = new ImageIcon("src/resource/ui_transition/gameStar1.png");
         }
+        System.out.println("Bento:  " + "" + finishedBento);
+
         targetFrame.ScoreBoardStar.setIcon(gameStarPath);
         targetFrame.ScoreBoard_FinishedBento.setText(targetFrame.ScoreBoard_FinishedBento.getText() + finishedBento);
         targetFrame.ScoreBoard_EarnPoints.setText(targetFrame.ScoreBoard_EarnPoints.getText() + earnPoints);
-        System.out.println("Bento:  " + "" + finishedBento);
         targetFrame.ScoreBoardBG.setVisible(true);
+        account.setBalance(account.getBalance() + earnPoints);
 
         //Disable Area
-        targetFrame.BentoHint.setVisible(false);
-        targetFrame.BentoHintBox.setVisible(false);
-        targetFrame.selectedFrame.setVisible(false);
-        targetFrame.bentoArrow.setVisible(false);
-        targetFrame.BentoHitBox1.setVisible(false);
-        targetFrame.BentoHitBox2.setVisible(false);
-        targetFrame.BentoHitBox3.setVisible(false);
+        targetFrame.BentoHint.setVisible(false); targetFrame.BentoHintBox.setVisible(false); targetFrame.selectedFrame.setVisible(false); targetFrame.bentoArrow.setVisible(false);
+        targetFrame.BentoHitBox1.setVisible(false); targetFrame.BentoHitBox2.setVisible(false); targetFrame.BentoHitBox3.setVisible(false);
     }
-
-    public void backToStage(){ new MainStage(); targetFrame.dispose(); }
-    public void retryNewGame(){ new MiniGameCooking(); targetFrame.dispose(); }
 
     @Override
     public void actionPerformed(ActionEvent e) {

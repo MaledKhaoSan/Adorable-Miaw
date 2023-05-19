@@ -13,20 +13,21 @@ public class ActionHandlerOfCleaning implements ActionListener, KeyListener, Mou
 
     public ActionHandlerOfCleaning(MiniGameCleaning targetFrame) { this.targetFrame = targetFrame;}
     public void startGameTimer() { targetFrame.requestFocusInWindow();new CleaningMissionCreate(targetFrame, targetFrame.Challenge1, "");}
+    public void endGameTimer(){
+        System.out.println("[ already set Mini game Cleaning Cool down ]");
+        account = accountSaved.load();
+        account.setCooldown(300);
+        account.setBalance(account.getBalance() + 100);
+        accountSaved.save();
+        Thread thread = new Thread(new CooldownAftergame()); thread.start();
+    }
     public void backToStage(){ new MainStage(); targetFrame.dispose(); }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == targetFrame.ScoreBoardButton1) {
-            targetFrame.ScoreBoardButton1.removeActionListener(this);
+        if (e.getSource() == targetFrame.ScoreBoardButton1) { targetFrame.ScoreBoardButton1.removeActionListener(this);
 
-            System.out.println("[ already set Minigame Cleaning Cooldown ]");
-            account = accountSaved.load();
-            account.setCooldown(300);
-            accountSaved.save();
-            Thread thread = new Thread(new CooldownAftergame()); thread.start();
-
-
+            endGameTimer();
             targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));
             new Thread(new RunnableOfCleaning(tutorialsTime, targetFrame, this), "stageTransition").start();
         }

@@ -14,7 +14,7 @@ public class CatPlaying extends CatAnimated {
     @Override
     public void move() {}
     @Override
-    public void jump() {}
+    public void playing() {}
 
     @Override
     public void update() {

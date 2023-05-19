@@ -26,7 +26,7 @@ public class CatWalking extends CatAnimated {
         }
     }
     @Override
-    public void jump() {}
+    public void playing() {}
     @Override
     public void update() {
         currentFrame = (currentFrame + 1) % frameCount;

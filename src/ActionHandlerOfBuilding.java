@@ -7,9 +7,6 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
     private AccountSaved accountSaved = new AccountSaved();
     private int waiter = 2;
 
-
-
-
     private static int currentIndex = 0;
     public static String[][] defaultSlideMenu = {
             //boxIcon1
@@ -57,29 +54,6 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
         if (e.getSource() == targetFrame.bentoExit) {
             new Thread(new RunnableOfBuilding(waiter, targetFrame, targetFrame.bentoExit, this), "bentoFurTransition").start();
         }
-         else if (e.getSource() == targetFrame.ButtonA) {
-            account.setBalance(account.getBalance() + 100);
-            System.out.println(account.getBalance());
-            System.out.println("addMoney");
-
-        } else if (e.getSource() == targetFrame.ButtonB) {
-            accountSaved.save();
-            System.out.println("save");
-
-        } else if (e.getSource() == targetFrame.ButtonC) {
-            account = accountSaved.load();
-            System.out.println(account.getBalance());
-            System.out.println("load");
-
-        } else if (e.getSource() == targetFrame.ButtonD) {
-//            System.out.println(account.getBalance());
-//            account.setCooldown(300);
-//            System.out.println("set cooldown 1");
-//            accountSaved.save();
-//            account = accountSaved.load();
-//            Thread thread = new Thread(new CooldownAftergame());
-//            thread.start();
-        }
         else if (e.getSource() == targetFrame.furniture_aqua) {
             furnitureInteract( new Furniture("aquarium", account.isFur_aqua(), 100) );
         }
@@ -98,6 +72,7 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
         else if (e.getSource() == targetFrame.furniture_bento) {
             furnitureInteract( new Furniture("bento", account.isFur_bento(), 200) );
         }
+        //else if (e.getSource() == targetFrame.furniture_vase) {account.setBalance(account.getBalance() + 100); System.out.println("addMoney 100: " + account.getBalance());}
     }
     @Override
     public void windowOpened(WindowEvent e) {
@@ -110,7 +85,6 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
             if (furniture.getName().equals("bento")) {
                 targetFrame.furniture_bento.removeActionListener(this);
                 new Thread(new RunnableOfBuilding(waiter, targetFrame, targetFrame.furniture_bento, this), "bentoFurTransition").start();
-
             }
             System.out.println("Already Buy it");
         }

@@ -51,7 +51,7 @@ public class CleaningObjects extends CleaningObjectsModify implements  MouseList
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3){
             if (rotatable) {
-                if (mouseX >= 0 && mouseX < 0 + objectWidth && mouseY >= 0 && mouseY < 0 + objectHeight) {
+                if (mouseX >= 0 && mouseX < objectWidth && mouseY >= 0 && mouseY < objectHeight) {
                     rotationSwitch = !rotationSwitch;
                 }
             }

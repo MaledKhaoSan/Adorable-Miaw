@@ -35,39 +35,33 @@ public abstract class CleaningObjectsModify extends JLabel implements Runnable, 
         if (Thread.currentThread().getName().equals("objRunning")) {
             while (running) {
                 try {
+                    //เช็ค Objects ที่ Rotate กับ Switch ได้
                     if (rotatable & switchable){
-                        if (rotationStart >= 360) {
-                            rotationStart = 0;
-                            if (switchSpriteSheet){
-                                running = false;
-                                setPuzzleScoreCheck(getPuzzleScoreCheck() + 1);
-                                Thread.currentThread().interrupt();
-                            }
+                        if (rotationStart >= 360) {rotationStart = 0;
+                            if (switchSpriteSheet){stopObjRunning();}
                         }
-
                     }
+                    //เช็ค Objects ที่ Rotate ได้
                     else if (rotatable & !switchable) {
-                        if (rotationStart >= 360) {
-                            rotationStart = 0;
-                            running = false;
-                            setPuzzleScoreCheck(getPuzzleScoreCheck() +1);
-                            Thread.currentThread().interrupt();
-                        }
+                        if (rotationStart >= 360) {stopObjRunning();}
                     }
+                    //เช็ค Objects ที่ Switch ได้
                     else if (switchable) {
-                        if (switchSpriteSheet){
-                            running = false;
-                            setPuzzleScoreCheck(getPuzzleScoreCheck() +1);
-                            Thread.currentThread().interrupt();
-                        }
+                        if (switchSpriteSheet){stopObjRunning();}
                     }
                     rotatable();
                     repaint();
                     Thread.sleep(10);
                 }
-                catch (InterruptedException e){}
+                catch (InterruptedException ignored){}
             }
         }
+    }
+    public void stopObjRunning(){
+        rotationStart = 0;
+        running = false;
+        setPuzzleScoreCheck(getPuzzleScoreCheck() + 1);
+        Thread.currentThread().interrupt();
     }
 
     @Override
