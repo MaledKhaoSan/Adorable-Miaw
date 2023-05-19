@@ -54,10 +54,10 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
         // Define the animation sequence
         currentFrame = 0;
         frameCount = frames.length;
-        this.frameDelay = frameDelay;
+        //this.frameDelay = frameDelay;
         // Set the initial position of the entity
-        this.x = x;//-800;
-        this.y = y;//-30;
+        //this.x = x;//-800;
+        //this.y = y;//-30;
         width = (frameWidth); // Width of entity in pixels
         height = (frameHeight); // Height of entity in pixels
     }

@@ -17,7 +17,45 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
     }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (targetFrame.isCurrentWordRunning()) {
+            char typedChar = e.getKeyChar();
+            if (typedChar == targetFrame.getCurrentWord().charAt(targetFrame.getCurrentWordStart())) {
+                targetFrame.setCurrentWordStart(targetFrame.getCurrentWordStart() + 1);
+                if (targetFrame.getCurrentWord().length() == targetFrame.getCurrentWordStart()) {
+                    targetFrame.setCurrentWordRunning(false);
+                    System.out.println("LAST WORD");
+                }
+                correctWords++;
+                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
+                        + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
+                        + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
+                        + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart()) + "<html>");
+            }
+            else {
+                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
+                        + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
+                        + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: red'>"
+                        + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart(), targetFrame.getCurrentWordStart() + 1)
+                        + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
+                        + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart() + 1) + "<html>");
+                incorrectWords++;
+            }
+        }
 
+        //Tutorials <3
+        else  if (e.getKeyCode() == KeyEvent.VK_SPACE & targetFrame.intro.isVisible()) {
+            if (targetFrame.tutorial1.isVisible()) {
+                targetFrame.tutorial1.setVisible(false);
+            } else if (targetFrame.tutorial2.isVisible()) {
+                targetFrame.intro.removeMouseListener(this);
+                targetFrame.intro.removeKeyListener(this);
+                int tutorialsTime = 2;
+                new Thread(new RunnableOfTyping(tutorialsTime, targetFrame, this), "tutorialTransition").start();
+            }
+        }
+    }
     public void prepareTimer() {
         new Thread(new RunnableOfTyping(prepareTime , targetFrame, this), "prepareCountDown").start();
     }
@@ -59,45 +97,7 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
             targetFrame.intro.requestFocusInWindow();
         }
     }
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (targetFrame.isCurrentWordRunning()) {
-            char typedChar = e.getKeyChar();
-            if (typedChar == targetFrame.getCurrentWord().charAt(targetFrame.getCurrentWordStart())) {
-                targetFrame.setCurrentWordStart(targetFrame.getCurrentWordStart() + 1);
-                if (targetFrame.getCurrentWord().length() == targetFrame.getCurrentWordStart()) {
-                    targetFrame.setCurrentWordRunning(false);
-                    System.out.println("LAST WORD");
-                }
-                correctWords++;
-                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
-                + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
-                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
-                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart()) + "<html>");
-            }
-            else {
-                targetFrame.wordLabel.setText("<html><font style='font-family: Sabreen Regular Demo; font-size: 30px; color: gray'>"
-                + targetFrame.getCurrentWord().substring(0, targetFrame.getCurrentWordStart())
-                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: red'>"
-                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart(), targetFrame.getCurrentWordStart() + 1)
-                + "<font style='font-family: Sabreen Regular Demo; font-size: 30px; color: black'>"
-                + targetFrame.getCurrentWord().substring(targetFrame.getCurrentWordStart() + 1) + "<html>");
-                incorrectWords++;
-            }
-        }
-
-        //Tutorials <3
-        else  if (e.getKeyCode() == KeyEvent.VK_SPACE & targetFrame.intro.isVisible()) {
-            if (targetFrame.tutorial1.isVisible()) {
-                targetFrame.tutorial1.setVisible(false);
-            } else if (targetFrame.tutorial2.isVisible()) {
-                targetFrame.intro.removeMouseListener(this);
-                targetFrame.intro.removeKeyListener(this);
-                int tutorialsTime = 2;
-                new Thread(new RunnableOfTyping(tutorialsTime, targetFrame, this), "tutorialTransition").start();
-            }
-        }
-    }@Override
+  @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == targetFrame.ScoreBoardButton1) {
             targetFrame.ScoreBoardButton1.removeActionListener(this);

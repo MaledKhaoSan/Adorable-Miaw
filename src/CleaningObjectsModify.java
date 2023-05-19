@@ -65,7 +65,21 @@ public abstract class CleaningObjectsModify extends JLabel implements Runnable, 
     }
 
     @Override
-    public void paint(Graphics g) {}
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D obj = (Graphics2D) g;
+        int centerX = objectWidth / 2;  // Calculate center point of image X    |  int centerX = 48 + (377 - 48) / 2; // Calculate center point of image X
+        int centerY = objectHeight / 2; // Calculate center point of image Y    |  int centerY = 123 + (482 - 123) / 2; // Calculate center point of image Y
+        // Translate to the center of the image
+        obj.translate(centerX, centerY);
+        // Rotate by the desired angle
+        obj.rotate(Math.toRadians(rotationStart));
+        // Draw the image
+        obj.drawImage(spriteSheet, -objectWidth/2, -objectHeight/2, objectWidth, objectHeight, null);
+        // Reset transformations
+        obj.rotate(-Math.toRadians(rotationStart));
+        obj.translate(-centerX, -centerY);
+    }
 
     public static int getPuzzleScoreCheck() {return puzzleScoreCheck;}
 

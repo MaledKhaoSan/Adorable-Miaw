@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 
 public class CatPlaying extends CatAnimated {
     public CatPlaying(String spriteSheetPath){
-        this.CreateBufferedAnimated(spriteSheetPath, 1280, 720, 1, 6, 0,0, 100);
+        this.CreateBufferedAnimated(spriteSheetPath, 1280, 720, 1, 6, 0,0, 150);
     }
     @Override
     public void paint(Graphics g) {
@@ -19,7 +19,7 @@ public class CatPlaying extends CatAnimated {
     @Override
     public void update() {
         if ((currentFrame + 1) % frameCount == 0 & frameCount == 6){
-            CreateBufferedAnimated("src/resource/typing_game/CatSpriteSheet4.png", 1280, 720, 1, 9, 0,0, 100);
+            CreateBufferedAnimated("src/resource/typing_game/CatSpriteSheet4.png", 1280, 720, 1, 9, 0,0, 150);
         }
         else if ((currentFrame + 1) % frameCount == 0){
             for (int i = 0; i < frames.length / 2; i++) {

@@ -5,7 +5,6 @@ public class CatWalking extends CatAnimated {
     public CatWalking(String spriteSheetPath){
         this.CreateBufferedAnimated(spriteSheetPath, 1280, 720, 1, 6, -800, -15, 100);
     }
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
