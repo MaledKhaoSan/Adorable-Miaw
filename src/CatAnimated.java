@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public abstract class CatAnimated extends JLayeredPane implements Runnable, CatBehavior {
@@ -30,27 +32,28 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
         this.x = x;
         this.y = y;
         this.frameDelay = frameDelay;
-        CreateBufferedFrame();
+        try (InputStream input = new FileInputStream(spriteSheetPath)) {
+            spriteSheet = ImageIO.read(input);
+        } catch (IOException ex) {ex.printStackTrace();}
+        CreateBufferedSlice();
         running = true; new Thread(this, "").start();
     }
 
-    public void CreateBufferedFrame() {
-        try {
-            spriteSheet = ImageIO.read(new File(spriteSheetPath));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        // Slice the sprite sheet into individual frames
+
+    public void CreateBufferedSlice() {
+
         frames = new BufferedImage[rows * cols];
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                int X = j * frameWidth;
-                int Y = i * frameHeight;
-                int W = frameWidth;
-                int H = frameHeight;
-                frames[(i * cols) + j] = spriteSheet.getSubimage(X, Y, W, H);
-            }
+          for (int j = 0; j < cols; j++) {
+            int X = j * frameWidth; int Y = i * frameHeight;
+            int W = frameWidth;     int H = frameHeight;
+            frames[(i * cols) + j] = spriteSheet.getSubimage(X, Y, W, H);
+          }
         }
+
+
+
+        // Slice the sprite sheet into individual frames
         // Define the animation sequence
         currentFrame = 0;
         frameCount = frames.length;
@@ -62,15 +65,10 @@ public abstract class CatAnimated extends JLayeredPane implements Runnable, CatB
         height = (frameHeight); // Height of entity in pixels
     }
 
-
-
-
-    @Override
-    public void paint(Graphics g) {}
+    // Update the current frame of the animation // Update the position of the entity
     @Override
     public void run() {
         while (running) {
-            // Update the current frame of the animation // Update the position of the entity
             update();
             move();
             playing();

@@ -72,10 +72,16 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
         else if (e.getSource() == targetFrame.furniture_bento) {
             furnitureInteract( new Furniture("bento", account.isFur_bento(), 200) );
         }
-        //else if (e.getSource() == targetFrame.furniture_vase) {account.setBalance(account.getBalance() + 100); System.out.println("addMoney 100: " + account.getBalance());}
+        else if (e.getSource() == targetFrame.furniture_vase) {
+
+            account.setBalance(account.getBalance());
+            account.setBalance(account.getBalance() + 100); System.out.println("addMoney 100: " + account.getBalance());
+            targetFrame.uiAccountText.setText( String.valueOf(account.getBalance()));
+        }
     }
     @Override
     public void windowOpened(WindowEvent e) {
+        account = accountSaved.load();
         checkAccAttr();
     }
 
@@ -86,15 +92,16 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
                 targetFrame.furniture_bento.removeActionListener(this);
                 new Thread(new RunnableOfBuilding(waiter, targetFrame, targetFrame.furniture_bento, this), "bentoFurTransition").start();
             }
-            System.out.println("Already Buy it");
+            System.out.println("Already purchased it");
         }
         else {
             if ((account.getBalance() - furniture.getPrice()) >= 0) {
                 account.setBalance(account.getBalance() - furniture.getPrice());
                 updateAccAttr(account, furniture);
-                System.out.println("You have bought a " + furniture.getName() + " for " + furniture.getPrice() + " dollars.");
-            } else {
-                System.out.println("You do not have enough balance to buy a " + furniture.getName() + ".");
+                System.out.println("You have purchased" + furniture.getName() + " for " + furniture.getPrice() + " dollars.");
+            }
+            else {
+                System.out.println("You do not have enough heart<3 to purchase a " + furniture.getName() + ".");
             }
         }
         targetFrame.uiAccountText.setText( String.valueOf(account.getBalance()));
@@ -155,11 +162,13 @@ public class ActionHandlerOfBuilding implements ActionListener, WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
+        accountSaved.save();
         System.out.println("Window is closing save");}
 
     @Override
     public void windowClosed(WindowEvent e) {
         targetFrame.soundPlayer.stopAudio();
+        accountSaved.save();
         System.out.println("Window is closed");
     }
 

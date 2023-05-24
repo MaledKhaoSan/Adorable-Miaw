@@ -41,7 +41,6 @@ public class MiniGameTyping extends JFrame{
                 super.paintComponent(g);
                 try {
                     g.drawImage(new ImageIcon("src/resource/typing_game/background.png").getImage(), 0, 0, null);
-
                     File fontPath = new File("src/resource/fonts/Sabreen Regular Demo 400.ttf");
                     Font font = Font.createFont(Font.TRUETYPE_FONT, fontPath).deriveFont(Font.PLAIN, 30); //set size & style
 

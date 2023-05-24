@@ -38,8 +38,11 @@ public class MiniGameCooking extends JFrame {
         layer.add(BentoHint = new SceneModify().createJLabelWithFont(1280/2 - 450/2, 32, 460, 70, 176, 27, "src/resource/fonts/Aloja-Light.otf", "", true), Integer.valueOf(8));
         layer.add(BentoHintBox = new SceneModify().createJLabelWithKey(1280/2 - 450/2, 28, 460, 70, null, "src/resource/cooking_game/selectedHint.png"), Integer.valueOf(8));
         layer.add(BentoHitBox1 = new SceneModify().createJButton(123, 200, 224, 370, handler, null, true), Integer.valueOf(8));
+        //BentoHitBox1.setBackground(new Color(0,0,0, 80)); BentoHitBox1.setOpaque(true);
         layer.add(BentoHitBox2 = new SceneModify().createJButton(364, 200, 251, 175, handler, null, true), Integer.valueOf(8));
+        //BentoHitBox2.setBackground(new Color(0,0,0,80)); BentoHitBox2.setOpaque(true);
         layer.add(BentoHitBox3 = new SceneModify().createJButton(364, 390, 283, 180, handler, null, true), Integer.valueOf(8));
+        //BentoHitBox3.setBackground(new Color(0,0,0,80)); BentoHitBox3.setOpaque(true);
         //Bento Food
         layer.add(mainFood = new SceneModify().createJLabelWithMouse(115, 222, 273, 350, null, null), Integer.valueOf(4));
         layer.add(sideFood = new SceneModify().createJLabelWithMouse(325, 209, 284, 189, null, null), Integer.valueOf(5));

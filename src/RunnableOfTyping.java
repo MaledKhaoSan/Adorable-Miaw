@@ -24,7 +24,7 @@ public class RunnableOfTyping implements Runnable{
     public void run() {
         if (Thread.currentThread().getName().equals("prepareCountDown")) {
             try {
-                while (countdown > 0) {
+                while (countdown > 0 | targetFrame.isCurrentWordRunning()) {
                     System.out.println("Game Start in "+countdown);
                     targetFrame.typingCountdown.setText( Integer.toString(countdown));
                     countdown--;
@@ -37,22 +37,22 @@ public class RunnableOfTyping implements Runnable{
 
         else if (Thread.currentThread().getName().equals("starter")) {
             try {
-                while (countdown > 0) {
+                while (countdown > 0 | targetFrame.isCurrentWordRunning()) {
                     updateCountDown(--countdown);
-                    if (countdown == 175){
+                    if (countdown == 25){
                         //Upcasting ประกาศแม่สร้างลูก
                         CatAnimated cat = new CatCreated().CatGetType(2);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(8));
                     }
-                    if (countdown == 170){
+                    if (countdown == 20){
                         //Upcasting ประกาศแม่สร้างลูก
                         CatAnimated cat = new CatCreated().CatGetType(0);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }
 
-                    if (countdown == 160){
+                    if (countdown == 10){
                         //Upcasting ประกาศแม่สร้างลูก
                         CatAnimated cat = new CatCreated().CatGetType(1);
                         cat.setBounds(0, 0, 1280, 720);
@@ -67,7 +67,7 @@ public class RunnableOfTyping implements Runnable{
 
         else if (Thread.currentThread().getName().equals("normal")) {
             try {
-                while (countdown > 0) {
+                while (countdown > 0 | targetFrame.isCurrentWordRunning()) {
                     updateCountDown(--countdown);
                     if (countdown == 115){
                         //Upcasting ประกาศแม่สร้างลูก
@@ -99,17 +99,15 @@ public class RunnableOfTyping implements Runnable{
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(8));
                     }
-
-                    if (countdown == 110){
+                    if (countdown == 119){
                         //Upcasting ประกาศแม่สร้างลูก
-                        CatAnimated cat = new CatCreated().CatGetType(1);
+                        CatAnimated cat = new CatCreated().CatGetType(0);
                         cat.setBounds(0, 0, 1280, 720);
                         targetFrame.layer.add(cat, Integer.valueOf(9));
                     }
                     Thread.sleep(1000); // wait for 1 second
                 }
                 targetActionHandler.endGameTimer(300);
-
             } catch (InterruptedException e) {}
         }
 

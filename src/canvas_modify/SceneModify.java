@@ -1,6 +1,8 @@
 package canvas_modify;
 
-import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -90,7 +92,12 @@ public class SceneModify extends JLayeredPane implements Runnable{
     public JButton createJButton(int x, int y, int width, int height, ActionListener handler, String path, boolean visible) {
         JButton jButton = new JButton(new ImageIcon(path));
         jButton.setBounds(x, y, width, height);
+
         jButton.setBorder(null);
+        jButton.setBorderPainted(false); // Hide the button frame
+        jButton.setFocusPainted(false); // Hide the focus frame
+        jButton.setBackground(new Color(0, 0, 0, 0));
+
         jButton.addActionListener(handler); // use the actionHandler parameter directly
         jButton.setVisible(visible);
         return jButton;
@@ -139,19 +146,5 @@ public class SceneModify extends JLayeredPane implements Runnable{
             e.printStackTrace();
         }
         return jLabel;
-    }
-
-    protected void playAudio(String filePath) {
-
-
-
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            System.out.println("Error playing audio: " + e.getMessage());
-        }
     }
 }

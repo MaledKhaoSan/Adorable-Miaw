@@ -41,7 +41,9 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
                 targetLayer.setVisible(false);
                 targetFrame.Challenge5.add(new CleaningMissionCreate(targetFrame, targetFrame.Challenge5));
             }
-            case "Challenge5" -> targetFrame.ScoreBoardBG.setVisible(true);
+            case "Challenge5" -> {
+                targetFrame.ScoreBoardBG.setVisible(true);
+            }
         }
     }
     public CleaningMissionCreate(JLayeredPane targetLayer) {
@@ -145,6 +147,7 @@ public class CleaningMissionCreate extends JLayeredPane implements Runnable{
             CleaningMissionReset(5);
         }
     }
+
     public void CleaningMissionReset(int puzzleScore) {
         this.puzzleScore = puzzleScore;
         CleaningObjectsModify.setPuzzleScoreCheck(0);

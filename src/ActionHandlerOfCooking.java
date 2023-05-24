@@ -41,10 +41,7 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
 
     private Account account;
     private AccountSaved accountSaved = new AccountSaved();
-    public ActionHandlerOfCooking(MiniGameCooking targetFrame) {
-        this.targetFrame = targetFrame;
-        account = accountSaved.load();
-    }
+    public ActionHandlerOfCooking(MiniGameCooking targetFrame) {this.targetFrame = targetFrame;}
     public void prepareTimer() {
         new Thread(new RunnableOfCooking(prepareTime , targetFrame, this), "prepareCountDown").start();
     }
@@ -69,7 +66,10 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
         targetFrame.ScoreBoard_FinishedBento.setText(targetFrame.ScoreBoard_FinishedBento.getText() + finishedBento);
         targetFrame.ScoreBoard_EarnPoints.setText(targetFrame.ScoreBoard_EarnPoints.getText() + earnPoints);
         targetFrame.ScoreBoardBG.setVisible(true);
+
+        account = accountSaved.load();
         account.setBalance(account.getBalance() + earnPoints);
+        accountSaved.save();
 
         //Disable Area
         targetFrame.BentoHint.setVisible(false); targetFrame.BentoHintBox.setVisible(false); targetFrame.selectedFrame.setVisible(false); targetFrame.bentoArrow.setVisible(false);
@@ -103,7 +103,6 @@ public class ActionHandlerOfCooking implements ActionListener, KeyListener, Mous
         else if (e.getSource() == targetFrame.BentoHitBox3){
             updateSlideMenu(dessertSlideMenu, targetFrame.dessertFood, 460, 335);
         }
-
         else if (e.getSource() == targetFrame.ScoreBoardButton1) {
             targetFrame.ScoreBoardButton1.removeActionListener(this);
             targetFrame.layer.add(new SceneModify().addJLayerPaneAnimate(new SceneFadeIn()), Integer.valueOf(30));

@@ -14,6 +14,8 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
     private int gameBonus;
     private ImageIcon gameStarPath;
     private final MiniGameTyping targetFrame;
+    private Account account;
+    private AccountSaved accountSaved = new AccountSaved();
     public ActionHandlerOfTyping(MiniGameTyping targetFrame) {
         this.targetFrame = targetFrame;
     }
@@ -63,9 +65,12 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
         targetFrame.requestFocusInWindow();
         targetFrame.generateNewWord();
         targetFrame.setCurrentWordRunning(true);
-        if (targetFrame.difficulty.equals("starter") | targetFrame.difficulty.equals("normal")) {
-            this.gameTime = 180;
+        if (targetFrame.difficulty.equals("starter")) {
+            this.gameTime = 30;
             this.gameBonus = 5;
+        } else if (targetFrame.difficulty.equals("normal")) {
+            this.gameTime = 120;
+            this.gameBonus = 8;
         } else if (targetFrame.difficulty.equals("hard")) {
             this.gameTime = 120;
             this.gameBonus = 8;
@@ -86,6 +91,10 @@ public class ActionHandlerOfTyping implements ActionListener, KeyListener, Mouse
         targetFrame.ScoreBoard_EarnPoints.setText(targetFrame.ScoreBoard_EarnPoints.getText() + earnPoints);
         System.out.println("CorrectWords:  " + "" + correctWords + " InCorrectWords: " + incorrectWords + " EarnPoints: " + earnPoints);
         targetFrame.ScoreBoardBG.setVisible(true);
+
+        account = accountSaved.load();
+        account.setBalance(account.getBalance() + earnPoints);
+        accountSaved.save();
     }
     public void backToStage(){ new MainStage(); targetFrame.dispose(); }
     public void retryNewGame(){ new MiniGameTyping(targetFrame.difficulty); targetFrame.dispose(); }

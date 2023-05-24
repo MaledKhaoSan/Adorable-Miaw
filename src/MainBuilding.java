@@ -7,8 +7,7 @@ public class MainBuilding extends JFrame{
     public JLabel uiAccount, uiAccountText;
     public JButton homeExit;
 
-    public JButton furniture_aqua, furniture_bear, furniture_coffee, furniture_sofa, furniture_bento, furniture_television;
-    public JLabel furniture_vase;
+    public JButton furniture_aqua, furniture_bear, furniture_coffee, furniture_sofa, furniture_bento, furniture_television, furniture_vase;
     public JButton ButtonA, ButtonB, ButtonC, ButtonD;
     public JLabel selectedFrame, selectedFrameName, selectedFrameBento, bentoBox, bentoBG;
     public JButton selectedFrameSlideRight, selectedFrameSlideLeft, selectedFrameButton, bentoExit;
@@ -52,27 +51,7 @@ public class MainBuilding extends JFrame{
         layer.add(furniture_sofa = new SceneModify().createJButton(270 , 593, 507, 127, handler, "src/resource/building_canvas/sofa_bw.png", true), Integer.valueOf(3));
         layer.add(furniture_bento = new SceneModify().createJButton(927, 483, 321, 237, handler, "src/resource/building_canvas/bento_bw.png", true), Integer.valueOf(3));
         layer.add(furniture_television = new SceneModify().createJButton(480, 108, 248, 217, handler, "src/resource/building_canvas/television_bw.png", true), Integer.valueOf(3));
-        layer.add(furniture_vase = new SceneModify().createJLabelWithMouse(751, 562,137,158, null, "src/resource/building_canvas/vase.png"), Integer.valueOf(4));
-
-
-//        layer.add(ButtonA = new SceneModify().createJButton(100, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-//        ButtonA.setOpaque(true);
-//        ButtonA.setBackground(Color.black);
-//
-//        layer.add(ButtonB = new SceneModify().createJButton(200, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-//        ButtonB.setOpaque(true);
-//        ButtonB.setBackground(Color.RED);
-//
-//        layer.add(ButtonC = new SceneModify().createJButton(300, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-//        ButtonC.setOpaque(true);
-//        ButtonC.setBackground(Color.CYAN);
-//
-//        layer.add(ButtonD = new SceneModify().createJButton(400, 100, 50, 50, handler, null, true), Integer.valueOf(4));
-//        ButtonD.setOpaque(true);
-//        ButtonD.setBackground(Color.ORANGE);
-
-
-
+        layer.add(furniture_vase = new SceneModify().createJButton(751, 562,137,158, handler, "src/resource/building_canvas/vase.png", true), Integer.valueOf(4));
 
         this.setSize(1280, 747);
         this.setLocationRelativeTo(null);

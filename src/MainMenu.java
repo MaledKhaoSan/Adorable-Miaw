@@ -19,11 +19,10 @@ public class MainMenu extends JFrame{
         ActionHandlerOfMenu handler = new ActionHandlerOfMenu(this);
         this.setBackground(Color.black);
         layer = new SceneModify().addJLayerPaneBackGround("src/resource/menu_canvas/background.png", "layer", true);
-        this.add(menuButton1 = new JButton(new ImageIcon("src/resource/menu_canvas/Button1.png")) {{
-            setBorder(null); setPressedIcon(new ImageIcon("src/resource/menu_canvas/Button1_1.png")); /* Remove border-graphics.*/
-            setBounds((1280/2) - (150/2), 589, 150, 35);
-            addActionListener(handler);
-        }});
+
+        this.add(menuButton1 = new SceneModify().createJButton((1280/2) - (150/2), 589, 150, 35, handler, "src/resource/menu_canvas/Button1.png", true));
+        menuButton1.setPressedIcon(new ImageIcon("src/resource/menu_canvas/Button1_1.png")); /* Remove border-graphics.*/
+
 
         this.add(layer);
         this.setSize(1280, 747);
